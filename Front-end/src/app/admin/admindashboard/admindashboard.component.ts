@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Aluno } from 'C:/Users/Lucas/Desktop/Faculdade/Residencia/teste/src/app/aluno'
-import {Router} from '@angular/router'
+import {Router, ActivatedRoute} from '@angular/router'
 
 @Component({
   selector: 'app-admindashboard',
@@ -13,23 +13,25 @@ export class AdminDashboardComponent implements OnInit {
     private router:Router
   ) { }
 
-  cont:number = 3;
+  cont:number = 0;
   cadastrarOff:boolean = false;
 
   users : Aluno[] =  [
 
-    {id:1, matricula:"666", nome: "Professor Random", login:"1234", password:"1234"},
-    {id:2, matricula:"123",nome: "Aluno Random", login:"4321", password:"4321"},
-    {id:3, matricula:"999",nome: "Outro Aluno Random", login:"111", password:"111"},
   ]
+
+  selectedUser: Aluno;
 
   ngOnInit() {
   }
 
-  abrirTelaRelatorio() {
-
-
+  AbrirTelaRelatorio() {
+    this.router.navigate(["/relatorio"]);
   }
+
+VoltarTelaLogin() {
+  this.router.navigate([""])
+}
 
 AbrirTelaCadastro() {
   this.cadastrarOff = true;
@@ -38,6 +40,16 @@ AbrirTelaCadastro() {
 FecharTelaCadastro() {
   this.cadastrarOff = false;
 }
+
+  atualizar(user: Aluno,nome:string,matricula:string,senha:string) : void {
+  //update
+  }
+
+
+  remover(user : Aluno) {
+
+    this.users.splice(this.users.indexOf(user),1);
+  }
 
   inserir(nome:string, matricula:string, senha:string) : void {
 

@@ -2,21 +2,23 @@
   <div>
     <ul class="users">
         <li *ngFor="let user of users">
-        <span>{{user.matricula}}</span> {{user.nome}}
-        <button> Editar </button>
-        <button> Remover </button>
+        <span>{{user.matricula}}</span> 
+        <span>{{user.nome}}</span>
+        <button (click)="atualizar(user)" > Editar </button>
+        <button (click)="remover(user)" > Remover </button>
         <button> Consultar </button>
         </li>
     </ul>
   </div>
 
   <div>
+      <div>
       <button (click)="AbrirTelaCadastro()"> Novo Cadastro </button>
-      
+      <button (click)="VoltarTelaLogin()"> Sair</button>
+    </div>
       <div [hidden]="cadastrarOff">
-          <button (click)=""> Relatorio </button>
+          <button (click)="AbrirTelaRelatorio()"> Relatorio </button>
       </div>
-      
   </div>
 
   <div [hidden]="!cadastrarOff">
@@ -31,7 +33,7 @@
         <div>
             <label>Matricula</label>
         </div>
-        <input id="input_matricula" [(ngModel)]="Matricula" type="text">
+        <input id="input_matricula" [(ngModel)]="Matricula" type="number">
     </div>
     <div>
       <div>
