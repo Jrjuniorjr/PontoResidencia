@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AdminDashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
+import { AlunoComponent } from './aluno/aluno.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RelatorioComponent } from './relatorio/relatorio.component';
     LoginComponent,
     AdminDashboardComponent,
     RelatorioComponent,
+    AlunoComponent
   ],
   imports: [
     BrowserModule,

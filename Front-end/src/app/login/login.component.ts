@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import {Router} from '@angular/router';
 import { LoginService } from '../services/login.service';
 
 @Component({
@@ -19,23 +18,13 @@ export class LoginComponent implements OnInit {
   constructor(
     private loginService:LoginService, 
     private formBuilder:FormBuilder,
-    private router:Router
   ) {}
 
   private login():void {
     const userLogin = this.userLogin?  this.userLogin.toString() : ""
     const userPassword = this.userPassword
 
-    this.loginService.login(userLogin, userPassword).subscribe(data => {
-      console.log(data)
-      data? this.router.navigate(["/admin"]) : this.router.navigate(["/"])
-    })
-    // if(user) { 
-    //   this.loggedIn = true
-    //   // this.user = JSON.stringify(user);
-    //   this.user = user;
-
-    // }
+    this.loginService.login(userLogin, userPassword)
 
     // user? alert("User Logged !") : ""//alert("Failed to Login !")
     
