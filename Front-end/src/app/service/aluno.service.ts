@@ -1,58 +1,47 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Router} from '@angular/router';
 
-// import { DataService } from '../../services/data.service';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-// export class Hero {
-//   id: number;
-//   name: string;
-// }
-
+// Fake Entrada
+let userPonto = { entrada:"", saida:""}
 
 @Injectable({ providedIn: 'root' })
-export class LoginService { // TODO: renomear para AuthService
-
-  private BASE_URL = "api"
-  private LOGIN_URL = "/users/?login=^LOGIN_STR$&password=^PASS_STR$" // gambiarra pq o regex não quer pegar lul
-
-  // private heroesUrl = 'api/users';  // URL to web api
+export class AlunoService { 
 
   constructor(private http:HttpClient, private router:Router) { }
 
-  login(login:string, password:string) {
-    const LOGIN_URL:string = this.LOGIN_URL.replace("LOGIN_STR", login).replace("PASS_STR", password)
+    fetchUserPonto(matricula:string) {
+      // simula um http get back-end
+      // returns a entrada e saida do aluno
+      return userPonto
+    }
 
-    return this.http.get<User[]>(this.BASE_URL + LOGIN_URL).subscribe(data => {
-      if(data.length == 1 && data[0].role === "professor") 
-        this.router.navigate(["/admin"], {queryParams:{
-          nome:data[0].nome,
-          matricula:data[0].matricula,
-          role:data[0].role,
-        }})
-      else if(data.length == 1 && data[0].role === "aluno") 
-        this.router.navigate(["/aluno"], {queryParams:{
-          nome:data[0].nome,
-          matricula:data[0].matricula,
-          role:data[0].role,
-        }}) 
-      else
-        this.router.navigate(["/"])
+    postUserEntrada(matricula:string) {
+      // enviar matricula pra servidor com POST
+      if(!userPonto.entrada)
+        userPonto.entrada = new Date().toString()
 
-    })
-    // return UserDB.find(user => user.login === login && user.password === password)
-  }
+      return userPonto.entrada
+    }
 
-  private auth(login:string, password:string) : Observable<User>{
-    return this.http.get<User>(this.BASE_URL + this.LOGIN_URL)
-  }
+    postUserSaida(matricula:string) {
+      // enviar matricula pra servidor com POST
+      if(!userPonto.saida)
+        userPonto.saida = new Date().toString()
+
+      return userPonto.saida
+
+    }
+
+    
 
   // getHero(id: number): Observable<Hero> {
   //   const url = `${this.heroesUrl}/${id}`;
@@ -86,3 +75,4 @@ export class LoginService { // TODO: renomear para AuthService
   // auth = (login:string, password:string) => UserDB.find(user => user.login === login && user.password === password)
 
 }
+

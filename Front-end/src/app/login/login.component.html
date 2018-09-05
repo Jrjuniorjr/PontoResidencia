@@ -1,6 +1,6 @@
 <h1 *ngIf="true"> User Login </h1>
 
-<!-- <input placeholder="login" (keyup.enter)="foo(box)" required [(ngModel)]="userLogin"> <br> -->
+  <!-- <input placeholder="login" (keyup.enter)="foo(box)" required [(ngModel)]="userLogin"> <br> -->
 
 <!-- <form (ngSubmit)="onSubmit()" #loginForm="ngForm"> -->
 <form (ngSubmit)="onSubmit()" [formGroup]="userLoginForm">
@@ -63,7 +63,6 @@
 
 <!-- <div> Login: {{userLogin}}</div>
 <div> Password: {{userPass}}</div> -->
-<div> User: {{user.nome}} {{user.role | uppercase}}</div> 
 <router-outlet></router-outlet>
 
 
