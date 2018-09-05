@@ -1,0 +1,51 @@
+<div>
+  <div>
+    <ul class="users">
+        <li *ngFor="let user of users">
+        <span>{{user.matricula}}</span> {{user.nome}}
+        <button> Editar </button>
+        <button> Remover </button>
+        <button> Consultar </button>
+        </li>
+    </ul>
+  </div>
+
+  <div>
+      <button (click)="AbrirTelaCadastro()"> Novo Cadastro </button>
+      
+      <div [hidden]="cadastrarOff">
+          <button (click)=""> Relatorio </button>
+      </div>
+      
+  </div>
+
+  <div [hidden]="!cadastrarOff">
+    <label>Novo Aluno</label>
+    <div>
+        <div>
+            <label>Nome</label>
+        </div>
+        <input id="input_nome" [(ngModel)]="Nome" type="text">
+    </div>
+    <div>
+        <div>
+            <label>Matricula</label>
+        </div>
+        <input id="input_matricula" [(ngModel)]="Matricula" type="text">
+    </div>
+    <div>
+      <div>
+          <label>Senha</label>
+      </div>
+        <input id="input_senha" [(ngModel)]="Senha" type="password">
+    </div>
+      
+    <div>
+        <button (click)="inserir(Nome,Matricula,Senha)"> Confirmar </button>
+        <button (click)="FecharTelaCadastro()"> Cancelar Cadastro </button>
+    </div>
+    
+  </div>
+</div>
+
+
