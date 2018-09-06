@@ -38,4 +38,10 @@ public class Aluno {
         this.senha = senha;
     }
 
+    @Override
+    public String toString() {
+        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + '}';
+    }
+
+    
 }
