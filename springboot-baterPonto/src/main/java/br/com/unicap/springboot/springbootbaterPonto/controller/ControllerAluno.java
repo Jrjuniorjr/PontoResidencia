@@ -17,32 +17,32 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/professor/aluno")
+@RequestMapping("/aluno")
 public class ControllerAluno {
-    
+
     @Autowired
     DAOAluno daoAluno;
-    
-    @PostMapping("/cadastrarAluno/{mat}/aluno")
-    public void inserir(@RequestBody Aluno aluno){
+
+    @PostMapping("/aluno/{matriculaProf}")
+    public void inserir(@RequestBody Aluno aluno, @PathVariable int matriculaProf ) {
         System.out.println(aluno);
-        daoAluno.inserir(aluno);
+        daoAluno.inserir(aluno,matriculaProf);
     }
-    
-    @DeleteMapping("/removerAluno/{matricula}")
-    public void remover(@PathVariable String matricula){
+
+    @DeleteMapping("/aluno/{matricula}")
+    public void remover(@PathVariable String matricula) {
         Aluno aluno;
         aluno = daoAluno.consultar(matricula);
         daoAluno.remover(aluno);
     }
-    
-    @GetMapping("/consultarAluno/{matricula}")
-    public Aluno consultar(@RequestBody String matricula){
+
+    @GetMapping("/aluno/{matricula}")
+    public Aluno consultar(@RequestBody String matricula) {
         return daoAluno.consultar(matricula);
     }
-    
-    @PutMapping("/atualizarAluno/aluno")
-    public void atualizar(@RequestBody Aluno aluno){
+
+    @PutMapping("/aluno")
+    public void atualizar(@RequestBody Aluno aluno) {
         daoAluno.atualizar(aluno);
     }
 }

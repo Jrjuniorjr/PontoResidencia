@@ -1,11 +1,18 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
-public class Professor{
+import javax.validation.constraints.NotBlank;
 
+@Entity
+@Table(name = "tbl_professor")
+public class Professor {
+
+    @NotBlank
     private String matricula;
 
+    @NotBlank
     private String nome;
 
+    @NotBlank
     private int senha;
 
     public Professor(String matricula, String nome, int senha) {

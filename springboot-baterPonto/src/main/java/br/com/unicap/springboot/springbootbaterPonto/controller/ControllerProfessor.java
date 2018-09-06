@@ -22,25 +22,30 @@ public class ControllerProfessor {
     @Autowired
     DAOProfessor c;
     
-    @PostMapping("/cadastrarProfessor/prefessor)
+    @PostMapping("/professor")
     public void inserir(@RequestBody Professor professor){
         System.out.println(professor);
         daoProfessor.inserir(professor);
     }
     
-    @DeleteMapping("/removerProfessor/{matricula}")
+    @DeleteMapping("/professor/{matricula}")
     public void remover(@PathVariable String matricula){
         Professor professor;
         professor = daoProfessor.consultar(matricula);
         daoProfessor.remover(professor);
     }
     
-    @GetMapping("/consultarProfessor/{matricula}")
+    @GetMapping("/professor/{matricula}")
     public Professor consultar(@RequestBody String matricula){
         return daoProfessor.consultar(matricula);
     }
     
-    @PutMapping("/atualizarProfessor/professor")
+    @GetMapping("/professor/")
+    public Professor listar(){
+        return daoProfessor.listar();
+    }
+    
+    @PutMapping("/professor")
     public void atualizar(@RequestBody Professor professor){
         daoProfessor.atualizar(professor);
     }
