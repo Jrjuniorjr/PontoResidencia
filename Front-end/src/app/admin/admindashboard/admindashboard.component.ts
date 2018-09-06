@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Aluno } from 'C:/Users/Lucas/Desktop/Faculdade/Residencia/teste/src/app/aluno'
+import { Aluno } from '../../aluno'
 import {Router, ActivatedRoute} from '@angular/router'
 
 @Component({
