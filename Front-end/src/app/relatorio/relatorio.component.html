@@ -1,23 +1,19 @@
 <div>
   <label>Meses</label>
     <select>
+      
         <option>Todos</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
-        <option>Janeiro</option>
+        <option *ngFor="let mes of meses">
+            <span>{{mes}}</span>
+          </option>
+        
         </select>
         <label>Alunos</label>
         <select>
             <option>Todos</option>
-            <option>Aluno 1</option>
+            <option *ngFor="let relatorio of relatorios">
+              <span>{{relatorio.nome}}</span>
+            </option>
            </select>
 </div>
 
