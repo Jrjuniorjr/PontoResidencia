@@ -6,6 +6,7 @@
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
+import br.com.unicap.springboot.springbootbaterPonto.repository.ProfessorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/professor")
 public class ControllerProfessor {
     @Autowired
-    DAOProfessor c;
+    ProfessorRepository daoProfessor;
     
     @PostMapping("/professor")
     public void inserir(@RequestBody Professor professor){
@@ -42,11 +43,11 @@ public class ControllerProfessor {
     }
     
     @GetMapping("/professor/{matricula}")
-    public Professor consultar(@RequestBody String matricula){
+    public Professor consultar(@PathVariable String matricula){
         return daoProfessor.consultar(matricula);
     }
     
-    @GetMapping("/professor/")
+    @GetMapping("/professor")
     public Professor listar(){
         return daoProfessor.listar();
     }

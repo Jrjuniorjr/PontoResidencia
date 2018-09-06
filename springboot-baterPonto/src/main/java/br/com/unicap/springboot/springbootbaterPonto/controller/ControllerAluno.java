@@ -6,6 +6,7 @@
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
+import br.com.unicap.springboot.springbootbaterPonto.repository.AlunoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,16 +18,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/aluno")
+@RequestMapping("/alunos")
 public class ControllerAluno {
 
     @Autowired
-    DAOAluno daoAluno;
+    AlunoRepository daoAluno;
 
     @PostMapping("/aluno/{matriculaProf}")
-    public void inserir(@RequestBody Aluno aluno, @PathVariable int matriculaProf ) {
+    public void inserir(@RequestBody Aluno aluno, @PathVariable int matriculaProf) {
         System.out.println(aluno);
-        daoAluno.inserir(aluno,matriculaProf);
+        daoAluno.inserir(aluno, matriculaProf);
     }
 
     @DeleteMapping("/aluno/{matricula}")
@@ -37,7 +38,7 @@ public class ControllerAluno {
     }
 
     @GetMapping("/aluno/{matricula}")
-    public Aluno consultar(@RequestBody String matricula) {
+    public Aluno consultar(@PathVariable String matricula) {
         return daoAluno.consultar(matricula);
     }
 

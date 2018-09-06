@@ -1,25 +1,41 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tbl_alunos")
 public class Aluno {
     
+    @Id
+    @Column(name = "aluno_id")
+    private Long id;
+    
     @NotBlank
-    public String matricula;
+    @Column(name = "aluno_matr")
+    private String matricula;
 
     @NotBlank
-    public String nome;
+    @Column(name = "aluno_nome")
+    private String nome;
 
     @NotBlank
+    @Column(name = "aluno_senha")
     private int senha;
 
-    public Aluno(String matricula, String nome, int senha) {
+    public Aluno(Long id, String matricula, String nome, int senha) {
+        this.id = id;
         this.matricula = matricula;
         this.nome = nome;
         this.senha = senha;
     }
+
+    public Aluno() {
+    }
+    
 
     public int getSenha() {
         return senha;

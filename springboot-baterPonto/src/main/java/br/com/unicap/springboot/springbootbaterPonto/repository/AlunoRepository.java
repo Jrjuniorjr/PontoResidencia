@@ -10,5 +10,5 @@ package br.com.unicap.springboot.springbootbaterPonto.repository;
  * @author Euller
  */
 public class AlunoRepository {
-    
+
 }
