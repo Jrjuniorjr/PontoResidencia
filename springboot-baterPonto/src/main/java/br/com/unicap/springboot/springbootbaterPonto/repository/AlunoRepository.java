@@ -5,10 +5,10 @@
  */
 package br.com.unicap.springboot.springbootbaterPonto.repository;
 
-/**
- *
- * @author Euller
- */
-public class AlunoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
+
+public interface AlunoRepository extends JpaRepository<Aluno, String>{
 
 }

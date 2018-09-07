@@ -5,10 +5,12 @@
  */
 package br.com.unicap.springboot.springbootbaterPonto.repository;
 
-/**
- *
- * @author Euller
- */
-public class ProfessorRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
+
+public interface ProfessorRepository extends JpaRepository<Professor, String>{
+	
+	
 
 }

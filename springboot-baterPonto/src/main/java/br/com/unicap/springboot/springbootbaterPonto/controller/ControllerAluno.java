@@ -7,7 +7,12 @@ package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
 import br.com.unicap.springboot.springbootbaterPonto.repository.AlunoRepository;
+import javassist.NotFoundException;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,34 +21,51 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @RestController
-@RequestMapping("/alunos")
+@RequestMapping("/aluno")
 public class ControllerAluno {
 
     @Autowired
     AlunoRepository daoAluno;
 
-    @PostMapping("/aluno/{matriculaProf}")
-    public void inserir(@RequestBody Aluno aluno, @PathVariable int matriculaProf) {
-        System.out.println(aluno);
-        daoAluno.inserir(aluno, matriculaProf);
+    @PostMapping("/{matriculaProf}")
+    public void inserir(@RequestBody Aluno aluno, @PathVariable String matriculaProf) {
+        daoAluno.save(aluno);
+        
     }
+    
+    @PostMapping("/baterPonto/{matricula}")
+    public void setbaterPonto(@PathVariable String matricula ) {
+    	
+    }
+    
+    /*@GetMapping("/baterPonto/{matricula}")
+    public HandlerExceptionResolver responderPonto() {
+    }*/
 
     @DeleteMapping("/aluno/{matricula}")
     public void remover(@PathVariable String matricula) {
         Aluno aluno;
-        aluno = daoAluno.consultar(matricula);
-        daoAluno.remover(aluno);
+        aluno = daoAluno.getOne(matricula);
+        daoAluno.delete(aluno);
+        
     }
 
-    @GetMapping("/aluno/{matricula}")
+    @GetMapping("/{matricula}")
     public Aluno consultar(@PathVariable String matricula) {
-        return daoAluno.consultar(matricula);
+        return daoAluno.getOne(matricula);
+    }
+    
+    @GetMapping
+    public List<Aluno> listar(){
+    	return daoAluno.findAll();
     }
 
-    @PutMapping("/aluno")
+    /*@PutMapping("/aluno")
     public void atualizar(@RequestBody Aluno aluno) {
-        daoAluno.atualizar(aluno);
-    }
+        daoAluno.update(aluno)
+    }*/
+    
 }

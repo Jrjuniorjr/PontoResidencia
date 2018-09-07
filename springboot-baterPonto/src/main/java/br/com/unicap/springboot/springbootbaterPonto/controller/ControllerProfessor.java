@@ -5,8 +5,12 @@
  */
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
+
 import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
 import br.com.unicap.springboot.springbootbaterPonto.repository.ProfessorRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- *
- * @author Euller
- */
-
-
 @RestController
 @RequestMapping("/professor")
 public class ControllerProfessor {
@@ -31,29 +29,28 @@ public class ControllerProfessor {
     
     @PostMapping("/professor")
     public void inserir(@RequestBody Professor professor){
-        System.out.println(professor);
-        daoProfessor.inserir(professor);
+        daoProfessor.save(professor);
     }
     
     @DeleteMapping("/professor/{matricula}")
     public void remover(@PathVariable String matricula){
         Professor professor;
-        professor = daoProfessor.consultar(matricula);
-        daoProfessor.remover(professor);
+        professor = daoProfessor.getOne(matricula);
+        daoProfessor.delete(professor);
     }
     
     @GetMapping("/professor/{matricula}")
     public Professor consultar(@PathVariable String matricula){
-        return daoProfessor.consultar(matricula);
+        return daoProfessor.getOne(matricula);
     }
     
-    @GetMapping("/professor")
-    public Professor listar(){
-        return daoProfessor.listar();
+    @GetMapping
+    public List<Professor> listar(){
+        return daoProfessor.findAll();
     }
     
-    @PutMapping("/professor")
+    /*@PutMapping("/professor")
     public void atualizar(@RequestBody Professor professor){
-        daoProfessor.atualizar(professor);
-    }
+        daoProfessor;
+    }*/
 }
