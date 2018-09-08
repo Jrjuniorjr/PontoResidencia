@@ -1,53 +1,112 @@
 <div>
-  <div>
-    <ul class="users">
-        <li *ngFor="let user of users">
-        <span>{{user.matricula}}</span> 
-        <span>{{user.nome}}</span>
-        <button (click)="atualizar(user)" > Editar </button>
-        <button (click)="remover(user)" > Remover </button>
-        <button (click)="AbrirTelaRelatorio()"> Consultar </button>
-        </li>
-    </ul>
-  </div>
+    <div>
+        <!-- TABELA ALUNOS -->
+        <table class="alunos">
+            <tr>
+                <th>Matricula</th>
+                <th>Nome</th>
+                <th colspan="3">Operações</th>
+            </tr>
 
-  <div>
-      <div>
-      <button (click)="AbrirTelaCadastro()"> Novo Cadastro </button>
-      <button (click)="VoltarTelaLogin()"> Sair</button>
+            <tr *ngFor="let aluno of alunos">
+                <td>{{aluno.matricula}}</td>
+                <td>{{aluno.nome}}</td>
+                <td><button (click)="atualizar(aluno)" > Editar </button> </td>
+                <td><button (click)="remover(aluno)" > Remover </button></td>
+                <td> <button (click)="AbrirTelaRelatorio()"> Consultar </button> </td>
+            </tr>
+        </table>
     </div>
-      <div [hidden]="cadastrarOff">
-          <button (click)="AbrirTelaRelatorio()"> Relatorio </button>
-      </div>
-  </div>
 
-  <div [hidden]="!cadastrarOff">
-    <label>Novo Aluno</label>
+    <!--  BOTÕES: CADASTRAR, SAIR, RELATÓRIO -->
     <div>
         <div>
-            <label>Nome</label>
+            <button (click)="isCadastroOn = !isCadastroOn; novoAlunoForm.reset()"> Novo Cadastro </button>
+            <button (click)="logout()"> Sair</button>
         </div>
-        <input id="input_nome" [(ngModel)]="Nome" type="text">
-    </div>
-    <div>
-        <div>
-            <label>Matricula</label>
+        
+        <div [hidden]="isCadastroOn">
+            <button (click)="AbrirTelaRelatorio()"> Relatorio </button>
         </div>
-        <input id="input_matricula" [(ngModel)]="Matricula" type="number">
     </div>
-    <div>
-      <div>
-          <label>Senha</label>
-      </div>
-        <input id="input_senha" [(ngModel)]="Senha" type="password">
-    </div>
+
+<!-- TELA: CADASTRO NOVO ALUNO -->
+<div id="cadastro" *ngIf="isCadastroOn">
+    <br>
+    <form (ngSubmit)="inserir()" [formGroup]="novoAlunoForm">
+
+        <!-- <div style="display:flex;">
+          <input type="number"
+            placeholder="Matrícula" 
+            [(ngModel)]="userLogin" 
+            name="ulogin" 
+            #matricula="ngModel"
+            required >
       
-    <div>
-        <button (click)="inserir(Nome,Matricula,Senha)"> Confirmar </button>
-        <button (click)="FecharTelaCadastro()"> Cancelar Cadastro </button>
-    </div>
-    
-  </div>
+          <div *ngIf="matricula.invalid && (matricula.dirty || matricula.touched)"> Login required ! </div>
+        </div>
+        
+        <div style="display:flex;">
+          <input type="password"
+            placeholder="Senha" 
+            [(ngModel)]="userPass" 
+            name="upass" 
+            #pass="ngModel"
+            required>
+          
+          <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"> Password required ! </div>
+        </div>
+         -->
+         <!-- MATRICULA -->
+        <div style="display:flex;">
+            <input type="number"
+                placeholder="Matrícula" 
+                formControlName="matricula"
+                required 
+            >
+      
+          <!-- <div *ngIf="matricula.invalid && (matricula.dirty || matricula.touched)"> Login required ! </div> -->
+            <div 
+                *ngIf="novoAlunoForm.controls['matricula'].invalid && (novoAlunoForm.controls['matricula'].dirty ||novoAlunoForm.controls['matricula'].touched)"> 
+                    Matricula required ! 
+          </div>
+        </div>
+        
+         <!--NOME -->
+        <div style="display:flex;">
+            <input type="text"
+                placeholder="Nome" 
+                formControlName="nome"
+                required
+            >
+              
+            <!-- <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"> Password required ! </div> -->
+            <div 
+                *ngIf="novoAlunoForm.controls['nome'].invalid && (novoAlunoForm.controls['nome'].dirty ||novoAlunoForm.controls['nome'].touched)"> 
+                    Name required ! 
+            </div>
+        </div>
+
+        <!-- SENHA -->
+        <div style="display:flex;">
+            <input type="password"
+                placeholder="Senha do Aluno" 
+                formControlName="password"
+                required
+            >
+          
+          <!-- <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"> Password required ! </div> -->
+          <div 
+            *ngIf="novoAlunoForm.controls['password'].invalid && (novoAlunoForm.controls['password'].dirty ||novoAlunoForm.controls['password'].touched)"> 
+                Passoword required ! 
+          </div>
+        </div>
+        
+      
+        <!-- <button (click)="matricula(); loginForm.reset()">Button</button> -->
+        <!-- <button type="submit" [disabled]="!loginForm.form.valid">Submit</button> -->
+        <button type="submit" [disabled]="!novoAlunoForm.valid">Cadastrar</button>
+    </form>
 </div>
 
 
