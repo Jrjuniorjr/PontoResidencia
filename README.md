@@ -22,4 +22,4 @@ criado pelos mesmos.
 | Lucas Rafael       | Giulia Falcão |
 | Euller Nobrega     | Lucas Matheus |
 | Nathalia Bartholo  | Barbara Lemos |
-| Jean Duarte        ||
+| Jean Duarte        | Glauber Freitas|
