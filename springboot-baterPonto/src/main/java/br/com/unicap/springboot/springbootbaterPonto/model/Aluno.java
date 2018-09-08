@@ -29,12 +29,12 @@ public class Aluno {
     @Column(name = "aluno_senha")
     private int senha;
 
-    /*public Aluno(Long id, String matricula, String nome, int senha) {
-        //this.id = id;
+    public Aluno(String matricula, String nome, int senha) {
+        
         this.matricula = matricula;
         this.nome = nome;
         this.senha = senha;
-    }*/
+    }
 
     public Aluno() {
     }
