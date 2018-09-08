@@ -22,35 +22,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/professor")
+@RequestMapping("/serviceProfessor")
 public class ControllerProfessor {
     @Autowired
     ProfessorRepository daoProfessor;
     
     @PostMapping("/professor")
     public void inserir(@RequestBody Professor professor){
+        
         daoProfessor.save(professor);
     }
     
+    
+    
     @DeleteMapping("/professor/{matricula}")
     public void remover(@PathVariable String matricula){
-        Professor professor;
-        professor = daoProfessor.getOne(matricula);
+        
+        Professor professor = daoProfessor.getOne(matricula);
         daoProfessor.delete(professor);
     }
     
+    
+    
     @GetMapping("/professor/{matricula}")
     public Professor consultar(@PathVariable String matricula){
-        return daoProfessor.getOne(matricula);
+        
+        return daoProfessor.findOne(matricula);
     }
     
-    @GetMapping
+    
+    
+    @GetMapping("/professores")
     public List<Professor> listar(){
+        
         return daoProfessor.findAll();
     }
     
-    /*@PutMapping("/professor")
-    public void atualizar(@RequestBody Professor professor){
-        daoProfessor;
-    }*/
+    @PutMapping("/professor")
+    public Professor atualizar(@RequestBody Professor professor){
+        
+        daoProfessor.save(professor);
+    }
+    
+    
 }
