@@ -9,16 +9,12 @@ import {Router, ActivatedRoute} from '@angular/router'
 })
 export class AdminDashboardComponent implements OnInit {
 
-  constructor(
-    private router:Router
-  ) { }
+  constructor(private router:Router) { }
 
   cont:number = 0;
   cadastrarOff:boolean = false;
 
-  users : Aluno[] =  [
-
-  ]
+  users : Aluno[] = []
 
   selectedUser: Aluno;
 

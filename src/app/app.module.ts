@@ -33,9 +33,9 @@ import { AlunoComponent } from './aluno/aluno.component';
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
     // Remove it when a real server is ready to receive requests.
-    HttpClientInMemoryWebApiModule.forRoot(
-      Repository, { dataEncapsulation: false }
-    ),
+    // HttpClientInMemoryWebApiModule.forRoot(
+    //   Repository, { dataEncapsulation: false }
+    // ),
 
     AppRoutingModule
   ],

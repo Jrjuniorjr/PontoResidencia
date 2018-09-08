@@ -1,8 +1,8 @@
 import { FormGroup,FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {Relatorio} from 'C:/Users/Lucas/Desktop/Faculdade/Residencia/teste/src/app/Relatorio';
+import {Relatorio} from '../Relatorio';
 import {Router} from '@angular/router'
-import {Aluno} from 'C:/Users/Lucas/Desktop/Faculdade/Residencia/teste/src/app/aluno'
+import {Aluno} from '../aluno'
 
 enum Meses {
   Janeiro = 1,
