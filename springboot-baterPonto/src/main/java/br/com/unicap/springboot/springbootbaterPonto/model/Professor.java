@@ -28,13 +28,13 @@ public class Professor {
     @Column(name = "prof_senha")
     private int senha;
 
-    /*
-    public Professor(Long id, String matricula, String nome, int senha) {
-        //this.id = id;
+    
+    public Professor(String matricula, String nome, int senha) {
+        
         this.matricula = matricula;
         this.nome = nome;
         this.senha = senha;
-    }*/
+    }
     
     public Professor() {
     }
