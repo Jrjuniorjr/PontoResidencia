@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import { User } from '../model/user';
-import { AlunoService } from '../service/aluno.service';
+import { AlunoService } from '../services/aluno.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -11,9 +11,9 @@ import { Location } from '@angular/common';
 })
 export class AlunoComponent implements OnInit {
 
-  user:User
-  entrada:string
-  saida:string
+  private user:User
+  private entrada:string
+  private saida:string
 
   constructor(
     private alunoService: AlunoService, 
@@ -23,25 +23,30 @@ export class AlunoComponent implements OnInit {
 
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
-      this.user = new User(params['matricula'], params['nome'], params['role'])
+      this.user = new User(params['matricula'], params['nome'])
+      this.updateUserPonto()
 
-      const {entrada, saida} = this.alunoService.fetchUserPonto(this.user.matricula)
-      this.entrada = entrada
-      this.saida = saida  
+      // localStorage.clear()
     })
   }
 
-  marcarEntrada() {
-    this.entrada = this.alunoService.postUserEntrada(this.user.matricula)
+  updateUserPonto() {
+    this.entrada = this.alunoService.getPonto(this.USER_ENTRADA)
+    this.saida = this.alunoService.getPonto(this.USER_SAIDA)
   }
 
-  marcarSaida() {
-    this.saida = this.alunoService.postUserSaida(this.user.matricula)
+  baterPonto() {
+    this.alunoService.baterPonto(this.user.matricula)
+    this.updateUserPonto()
   }
 
   logout() {
     this.user = null
     this.location.back()
   }
+
+  get USER_ENTRADA() { return this.user.matricula + "-entrada"}
+  get USER_SAIDA() { return this.user.matricula + "-saida"}
+
 }
 
