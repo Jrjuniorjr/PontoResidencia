@@ -30,8 +30,8 @@ public class ControllerAluno {
     @Autowired
     AlunoRepository daoAluno;
 
-    @PostMapping("/{matriculaProf}")
-    public void inserir(@RequestBody Aluno aluno, @PathVariable String matriculaProf) {
+    @PostMapping("/{professor}")
+    public void inserir(@RequestBody Aluno aluno) {
         daoAluno.save(aluno);
         
     }
@@ -45,7 +45,7 @@ public class ControllerAluno {
     public HandlerExceptionResolver responderPonto() {
     }*/
 
-    @DeleteMapping("/aluno/{matricula}")
+    @DeleteMapping("/{matricula}")
     public void remover(@PathVariable String matricula) {
         Aluno aluno;
         aluno = daoAluno.getOne(matricula);
