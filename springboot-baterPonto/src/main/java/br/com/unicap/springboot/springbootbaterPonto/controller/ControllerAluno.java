@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
@@ -11,6 +7,7 @@ import javassist.NotFoundException;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,48 +21,66 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @RestController
-@RequestMapping("/aluno")
+@RequestMapping("/serviceAluno")
 public class ControllerAluno {
 
     @Autowired
-    AlunoRepository daoAluno;
+    private AlunoRepository daoAluno;
 
-    @PostMapping("/{matriculaProf}")
-    public void inserir(@RequestBody Aluno aluno, @PathVariable String matriculaProf) {
-        daoAluno.save(aluno);
+   
+    @GetMapping("/alunos")
+    public List<Aluno> listar(){
         
+    	return daoAluno.findAll();
     }
-    
-    @PostMapping("/baterPonto/{matricula}")
+   
+   @PostMapping("/aluno/baterPonto/{matricula}")
     public void setbaterPonto(@PathVariable String matricula ) {
+        
+    	Aluno aluno = daoAluno.findOne(matricula);
+    	/* salvar os dados na base de relatorios para
+    	guardar as informações com a hora que bateu o ponto
+    	usando hora local ou de uma fonte segura para pegar data e hora
     	
+    	*/
     }
     
     /*@GetMapping("/baterPonto/{matricula}")
     public HandlerExceptionResolver responderPonto() {
     }*/
+    
+    
+    @PostMapping("/aluno/{matriculaProf}")
+    public Aluno inserir(@RequestBody Aluno aluno, @PathVariable String matriculaProf) {
+        
+        return daoAluno.save(aluno);
+        
+    }
+    
+    
 
     @DeleteMapping("/aluno/{matricula}")
     public void remover(@PathVariable String matricula) {
-        Aluno aluno;
-        aluno = daoAluno.getOne(matricula);
+       
+        Aluno aluno = daoAluno.getOne(matricula);
         daoAluno.delete(aluno);
         
     }
+    
+    
 
-    @GetMapping("/{matricula}")
+    @GetMapping("/aluno/{matricula}")
     public Aluno consultar(@PathVariable String matricula) {
-        return daoAluno.getOne(matricula);
+        
+        return daoAluno.findOne(matricula);
     }
     
-    @GetMapping
-    public List<Aluno> listar(){
-    	return daoAluno.findAll();
+    
+    
+    @PutMapping("/aluno")
+    public Aluno atualizar(@RequestBody Aluno aluno) {
+        
+        return daoAluno.save(aluno); 
     }
-
-    /*@PutMapping("/aluno")
-    public void atualizar(@RequestBody Aluno aluno) {
-        daoAluno.update(aluno)
-    }*/
     
 }
