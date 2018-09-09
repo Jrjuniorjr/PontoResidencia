@@ -2,21 +2,20 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-
 import { User } from '../model/user';
-import {EndpointPonto} from '../api/endpoint';
+import { EndpointService } from './endpoint.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-// Fake Entrada
-let userPonto = { entrada:"", saida:""}
-
 @Injectable({ providedIn: 'root' })
 export class AlunoService { 
 
-  constructor(private http:HttpClient) { }
+  constructor(
+    private http:HttpClient,
+    private endpointService:EndpointService
+  ) { }
 
     baterPonto(matricula:string) {
       let httpHeaders = new HttpHeaders({
@@ -24,7 +23,7 @@ export class AlunoService {
         'Cache-Control': 'no-cache'
       });
 
-      const endpoint = EndpointPonto.baseUrl + "/" + matricula
+      const endpoint = this.endpointService.ponto + "/" + matricula
   
       // Quero receber a resposta do servidor (Http Response) crua (completa) em vez do angular tentar converter a resposta em um Objeto, logo eu digo que o .post irá receber um HttpResponse<Object> (Angular)
       // Pra fazer com que o Angular me retorne o Http Response precisa passar o parâmetro { "observe" : "response" } no Options do .post
@@ -79,10 +78,5 @@ export class AlunoService {
       return of(result as T);
     };
   }
-
-
-
-  // auth = (login:string, password:string) => UserDB.find(user => user.login === login && user.password === password)
-
 }
 

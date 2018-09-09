@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of, empty } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { EndpointLogin } from '../api/endpoint';
 import { User } from '../model/user';
+import { EndpointService } from './endpoint.service';
 
 /**
  * LoginService.ts
@@ -16,7 +16,11 @@ import { User } from '../model/user';
  // TODO: renomear para AuthService
 @Injectable({ providedIn: 'root' })
 export class LoginService { 
-  constructor(private http:HttpClient) { }
+  
+  constructor(
+    private http:HttpClient,
+    private endpointService:EndpointService
+  ) { }
 
   /**
    * Utiliza o serviço HttpClient para fazer um POST no servidor
@@ -32,10 +36,15 @@ export class LoginService {
       'Cache-Control': 'no-cache'
     });
 
+    let data = {
+      login:login,
+      senha:password
+    }
+
     // HttpClient.post<T>, onde T é o tipo de retorno
     // Quero que o retorno seja um HttpResponse<Object> para poder ter mais flexibilidade nos erros em vez de pedir para que o Angular converta automaticamente o RESPONSE em Objeto User
     // Obs.: catchError( Function:errorHandler(error) )
-    return this.http.post<HttpResponse<Object>>(EndpointLogin.baseUrl, null, {headers:httpHeaders, observe:"response"})
+    return this.http.post<HttpResponse<Object>>(this.endpointService.login, data, {headers:httpHeaders, observe:"response"})
       .pipe(
         map( (data:HttpResponse<Object>) =>  data.body as User), // TODO: fazer regras de timeout aqui (HttpInterceptor)
         catchError(this.handleError<User>("login", new User("","",""))) // String vazia é melhor do que Null, menos chance de dar merda obg
@@ -50,7 +59,7 @@ export class LoginService {
   //   );
   // }
 
-    /**
+  /**
    * Handle de operações Http criado pelo Angular.io Docs
    * Não trava a aplicação quando ocorrer algum erro na operação
    * @param operation: string - Nome da operação que falhou

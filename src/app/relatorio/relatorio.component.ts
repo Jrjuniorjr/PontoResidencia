@@ -2,7 +2,7 @@ import { FormGroup,FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {Relatorio} from '../Relatorio';
 import {Router} from '@angular/router'
-import {Aluno} from '../aluno'
+import {Aluno} from '../model/aluno'
 
 enum Meses {
   Janeiro = 1,

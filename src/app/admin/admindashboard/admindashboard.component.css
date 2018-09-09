@@ -7,3 +7,17 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+table, th, td {
+    border: 1px solid black;
+}
+
+#cadastro {
+    /* border : 1px solid black; */
+    display : table;
+    /* padding: 5px; */
+}
+
+#cadastro * {
+    padding: 1px;
+}
