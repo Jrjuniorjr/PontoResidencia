@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -14,6 +15,7 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@OneToMany (mappedBy = "prof_id")
     @Column(name = "prof_id")
     private Long id;
     
@@ -27,13 +29,7 @@ public class Professor {
     @NotBlank
     @Column(name = "prof_senha")
     private int senha;
-
-    /*public Professor(Long id, String matricula, String nome, int senha) {
-        //this.id = id;
-        this.matricula = matricula;
-        this.nome = nome;
-        this.senha = senha;
-    }*/
+    
     
     public Professor() {
     }
