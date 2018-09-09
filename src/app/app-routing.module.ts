@@ -6,13 +6,17 @@ import { LoginComponent } from './login/login.component';
 import { AdminDashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { AlunoComponent } from './aluno/aluno.component';
+import { AuthGuard } from './services/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
+import { AlunoGuard } from './guards/aluno.guard';
 
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'admin', component: AdminDashboardComponent },
-  { path: 'relatorio', component: RelatorioComponent },
-  { path: 'aluno', component: AlunoComponent }  
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo:'/login', pathMatch:'full' },
+  { path: 'admin', component: AdminDashboardComponent,canActivate:[AuthGuard, AdminGuard] },
+  { path: 'relatorio', component: RelatorioComponent , canActivate:[AuthGuard, AdminGuard]},
+  { path: 'aluno', component: AlunoComponent , canActivate:[AuthGuard, AlunoGuard]}  
 
 ];
 

@@ -1,24 +1,26 @@
-<div>
-  
+<!-- FILTRAGEM -->
+
+<!-- <div>
   <label>Meses</label>
     <select [(ngModel)] = "mesSelected" (ngModelChange)="filtroMes($event)" >
-        <option selected>Todos</option>
-        <option *ngFor="let mes of meses" >
-            <span>{{mes}}</span>
-          </option>
-        </select>
-       
-          <label>Alunos</label>
-      <select [(ngModel)] = "alunoSelected" (ngModelChange)="filtroAluno($event)">
-          <option>Todos</option>
-          <option *ngFor="let aluno of alunos"  [ngValue]='aluno'>
-            <span>{{aluno.nome}}</span>
-          </option>
-         </select>
+      <option selected>Todos</option>
+      <option *ngFor="let mes of meses" >
+        <span>{{mes}}</span>
+      </option>
+    </select>
+<div>
+  
+<div>
+  <label>Alunos</label>
+    <select [(ngModel)]="alunoSelected" (ngModelChange)="filtroAluno($event)">
+      <option>Todos</option>
+      <option *ngFor="let aluno of alunos" [ngValue]='aluno'>
+        <span>{{aluno.nome}}</span>
+      </option>
+    </select>
+</div> -->
 
-</div>
-
-<ul>
+<!-- <ul>
   <li *ngFor="let relatorio of relatorios">
     <span>Nome: </span><strong>{{relatorio.nome}} </strong>
     <span>Matricula: </span><strong>{{relatorio.matricula}} </strong>
@@ -27,7 +29,27 @@
     <span>Saida: </span><strong>{{relatorio.saida}} </strong>
   
     </li>
-</ul>
+</ul> -->
+
+<!-- TABELA RELATÓRIO -->
+<div *ngIf="relatorios.length">
+    <table class="relatorio">
+        <tr>
+            <th>Matricula</th>
+            <th>Nome</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+        </tr>
+
+        <tr *ngFor="let relatorio of relatorios">
+            <td>{{relatorio.matricula}}</td>
+            <td>{{relatorio.nome}}</td>
+            <td>{{relatorio.entrada}}</td>
+            <td>{{relatorio.saida}}</td>
+        </tr>
+    </table>
+</div>
+
 
 <div>
   <button (click)="voltarTelaAdmin()">Voltar</button>

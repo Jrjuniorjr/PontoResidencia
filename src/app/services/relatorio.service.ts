@@ -5,6 +5,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from '../model/user';
 import { EndpointService } from './endpoint.service';
+import { Relatorio } from '../model/Relatorio';
 
 /**
  * LoginService.ts
@@ -13,51 +14,27 @@ import { EndpointService } from './endpoint.service';
  * Utiliza HttpClient (Serviço)
  */
 
- // TODO: renomear para AuthService
 @Injectable({ providedIn: 'root' })
-export class LoginService { 
-  
+export class RelatorioService {
+
   constructor(
     private http:HttpClient,
     private endpointService:EndpointService
   ) { }
-
-  /**
-   * Utiliza o serviço HttpClient para fazer um POST no servidor
-   * Tem como resposta um HTTP RESPONSE o qual em seu atributo BODY possui um JSON que representa um Usuário: {matricula: string, nome: string}
-   * @param login: string -matricula passada pelo Form
-   * @param password: string - senha passada pelo Form 
-   */
-  login(login:string, password:string): Observable<User> {
-
+  
+  fetchRelatorio(): Observable<Relatorio[]> {
     // Headers para enviar no POST
     let httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',  // Padrão para JSON
       'Cache-Control': 'no-cache'
     });
 
-    let data = {
-      login:login,
-      senha:password
-    }
-
-    // HttpClient.post<T>, onde T é o tipo de retorno
-    // Quero que o retorno seja um HttpResponse<Object> para poder ter mais flexibilidade nos erros em vez de pedir para que o Angular converta automaticamente o RESPONSE em Objeto User
-    // Obs.: catchError( Function:errorHandler(error) )
-    return this.http.post<HttpResponse<Object>>(this.endpointService.login, data, {headers:httpHeaders, observe:"response"})
+    return this.http.get<HttpResponse<Object>>(this.endpointService.EndpointRelatorio, {headers:httpHeaders, observe:"response"})
       .pipe(
-        map( (data:HttpResponse<Object>) =>  data.body as User), // TODO: fazer regras de timeout aqui (HttpInterceptor)
-        catchError(this.handleError<User>("login", new User("","",""))) // String vazia é melhor do que Null, menos chance de dar merda obg
+        map( (data:HttpResponse<Object>) =>  data.body as Relatorio[]), 
+        catchError(this.handleError<Relatorio[]>("relatorio", [])) 
       )
   }
-
-  // getHero(id: number): Observable<Hero> {
-  //   const url = `${this.heroesUrl}/${id}`;
-  //   return this.http.get<Hero>(url).pipe(
-  //     tap(_ => console.log(`fetched hero id=${id}`)),
-  //     catchError(this.handleError<Hero>(`getHero id=${id}`))
-  //   );
-  // }
 
   /**
    * Handle de operações Http criado pelo Angular.io Docs

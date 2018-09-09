@@ -3,6 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import { User } from '../model/user';
 import { AlunoService } from '../services/aluno.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../services/auth.service.';
 
 @Component({
   selector: 'app-aluno',
@@ -18,16 +19,21 @@ export class AlunoComponent implements OnInit {
   constructor(
     private alunoService: AlunoService, 
     private router:ActivatedRoute,
+    private auth:AuthService,
     private location:Location
   ) { }
 
   ngOnInit() {
-    this.router.queryParams.subscribe(params => {
-      this.user = new User(params['matricula'], params['nome'])
+    // this.router.queryParams.subscribe(params => {
+    //   this.user = new User(params['matricula'], params['nome'])
+    //   this.updateUserPonto()
+
+    //   // localStorage.clear()
+    // })
+
+      this.user = this.auth.authUser
       this.updateUserPonto()
 
-      // localStorage.clear()
-    })
   }
 
   updateUserPonto() {

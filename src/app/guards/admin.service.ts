@@ -4,7 +4,7 @@ import { Observable, of, empty } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Aluno } from '../model/aluno'
-import { EndpointService } from './endpoint.service';
+import { EndpointService } from '../services/endpoint.service';
 
 /**
  * AdminService.ts
