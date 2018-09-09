@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
       login: ['1', Validators.required],
       password:['1', Validators.required]
     })
+
+    // this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
   }
 
   /**
