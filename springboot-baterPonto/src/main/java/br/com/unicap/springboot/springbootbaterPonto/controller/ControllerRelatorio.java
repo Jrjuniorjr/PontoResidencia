@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.hibernate.mapping.Collection;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Relatorio;
 import br.com.unicap.springboot.springbootbaterPonto.repository.RelatorioRepository;
@@ -40,17 +38,17 @@ public class ControllerRelatorio {
     	daoRelatorio.VALIDAR_PONTO_SAIDA(matricula);
     }
 
-   /*@GetMapping("/{matricula}")
-    public Relatorio consultar(@PathVariable String matricula) {
+   @GetMapping("/{matricula}")
+    public ArrayList<Relatorio> consultar(@PathVariable String matricula) {
     	
     	//Long id = daoRelatorio.ID_BY_MATRICULA(matricula);
-    	
-    	return daoRelatorio.getOne();
-    }*/
+    	return daoRelatorio.listarRelatoriosByMatricula(matricula);
+    }
     
     @GetMapping
-    public List<Relatorio> listar(){
-    	return daoRelatorio.findAll();
+    public ArrayList<Relatorio> listar(){
+    	return daoRelatorio.listarRelatorios();
+
     }
     
 }

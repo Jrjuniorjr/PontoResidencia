@@ -38,7 +38,7 @@ public class ControllerAluno {
 
     @DeleteMapping("/{matricula}")
     public ResponseEntity<Aluno> remover(@PathVariable String matricula){
-        Aluno aluno = daoAluno.getOne(matricula);
+        Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
         if(aluno != null) {
         	daoAluno.delete(aluno);
         	return ResponseEntity.noContent().build();
@@ -48,7 +48,7 @@ public class ControllerAluno {
 
     @GetMapping("/{matricula}")
     public ResponseEntity<Aluno> consultar(@PathVariable String matricula) {
-    	Aluno aluno = daoAluno.getOne(matricula);
+    	Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
     	if(aluno == null) {
     		return ResponseEntity.notFound().build();    	}
     	else {
@@ -65,7 +65,7 @@ public class ControllerAluno {
     @PutMapping("/{matricula}")
     public ResponseEntity<Aluno> alterarSenha(@PathVariable String matricula, @RequestBody String senha) {
     	
-    	Aluno aluno = daoAluno.getOne(matricula);
+    	Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
     	
     	if(aluno == null) {
     		return ResponseEntity.notFound().build();

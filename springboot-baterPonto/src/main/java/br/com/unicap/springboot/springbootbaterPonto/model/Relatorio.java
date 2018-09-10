@@ -20,8 +20,7 @@ import javax.persistence.Table;
 import javax.sql.DataSource;
 
 
-@Entity
-@Table(name = "tbl_ponto")
+
 @NamedStoredProcedureQueries({
     @NamedStoredProcedureQuery(name = "VALIDAR_PONTO_ENTRADA", 
                                procedureName = "VALIDAR_PONTO_ENTRADA",
@@ -32,16 +31,11 @@ import javax.sql.DataSource;
     procedureName = "VALIDAR_PONTO_SAIDA",
     parameters = {
           @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class)
-    })/*,
-    @NamedStoredProcedureQuery(name = "ID_BY_MATRICULA", 
-    procedureName = "ID_BY_MATRICULA",
-    parameters = {
-          @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class),
-          @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = Long.class)
-    })*/
+    })
 })
 
-
+@Entity
+@Table(name = "tbl_ponto")
 public class Relatorio {
 	
 	@Id
@@ -67,47 +61,56 @@ public class Relatorio {
   
     }
   
+	
 	public Long getId() {
 		return id;
 	}
+
 
 	public void setId(Long id) {
 		this.id = id;
 	}
 
 
-
-	public Date getHoraent() {
-		return horaent;
-	}
-
-	public void setHoraent(Date horaent) {
-		this.horaent = horaent;
-	}
-
-	public Date getHorasai() {
-		return horasai;
-	}
-
-	public void setHorasai(Date horasai) {
-		this.horasai = horasai;
-	}
-	
 	public Aluno getAluno() {
 		return aluno;
 	}
+
 
 	public void setAluno(Aluno aluno) {
 		this.aluno = aluno;
 	}
 
+
 	public Professor getProfessor() {
 		return professor;
 	}
 
+
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
+
+
+	public Date getHoraent() {
+		return horaent;
+	}
+
+
+	public void setHoraent(Date horaent) {
+		this.horaent = horaent;
+	}
+
+
+	public Date getHorasai() {
+		return horasai;
+	}
+
+
+	public void setHorasai(Date horasai) {
+		this.horasai = horasai;
+	}
+
 
 	@Override
 	public String toString() {

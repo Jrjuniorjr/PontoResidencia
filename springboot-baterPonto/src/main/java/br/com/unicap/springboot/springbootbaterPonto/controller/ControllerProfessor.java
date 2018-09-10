@@ -6,7 +6,7 @@
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +24,9 @@ public class ControllerProfessor {
     @Autowired
     ProfessorRepository daoProfessor;
     
-    @GetMapping("/professor/{matricula}")
+    @GetMapping("/{matricula}")
     public ResponseEntity<Professor> consultar(@PathVariable String matricula) {
-        Professor professor = daoProfessor.getOne(matricula);
+        Professor professor = daoProfessor.listarProfessorByMatricula(matricula).get(0);
         if(professor == null) {
         	return ResponseEntity.notFound().build();
         }else {
@@ -35,8 +35,8 @@ public class ControllerProfessor {
     }
     
     @GetMapping
-    public List<Professor> listar(){
-        return daoProfessor.findAll();
+    public ArrayList<Professor> listar(){
+        return daoProfessor.listarProfessor();
     }
     
 }

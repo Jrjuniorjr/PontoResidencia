@@ -16,12 +16,11 @@ import javax.validation.constraints.NotBlank;
 @Table(name = "tbl_alunos")
 public class Aluno {
     
-    
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "aluno_id")
     private Long id;
     
-    @Id
     @Column(name = "aluno_matr")
     private String matricula;
 
