@@ -5,15 +5,7 @@
  */
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
-import br.com.unicap.springboot.springbootbaterPonto.model.Relatorio;
-import br.com.unicap.springboot.springbootbaterPonto.repository.RelatorioRepository;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
 import java.util.List;
-
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.unicap.springboot.springbootbaterPonto.model.Relatorio;
+import br.com.unicap.springboot.springbootbaterPonto.repository.RelatorioRepository;
 
 @RestController
 @RequestMapping("/relatorio")
@@ -37,32 +32,21 @@ public class ControllerRelatorio {
     
     @PostMapping("/entrada/{matricula}")
     public void baterPontoEnt(@PathVariable String matricula ) {
-    	
-		try {
-		InitialContext ctx = new InitialContext();
-		DataSource ds;
-		ds = (DataSource)ctx.lookup("jdbc:mysql://localhost:3306/db_sistemaponto");
-		Connection connection = ds.getConnection();
-		java.sql.CallableStatement proc = connection.prepareCall("{ call VALIDAR_PONTO_ENTRADA(matricula) }");            
-		proc.setString("matricula", matricula);
-		proc.execute();
-		}catch(Exception e) {
-			e.getMessage();
-		}
-		
+    	daoRelatorio.VALIDAR_PONTO_ENTRADA(matricula);
     }
     
     @PostMapping("/saida/{matricula}")
     public void baterPontoSai(@PathVariable String matricula) {
-    	
+    	daoRelatorio.VALIDAR_PONTO_SAIDA(matricula);
     }
 
-    @GetMapping("/{matricula}")
+   /*@GetMapping("/{matricula}")
     public Relatorio consultar(@PathVariable String matricula) {
     	
-    	return daoRelatorio.getOne(matricula);
-             
-    }
+    	//Long id = daoRelatorio.ID_BY_MATRICULA(matricula);
+    	
+    	return daoRelatorio.getOne();
+    }*/
     
     @GetMapping
     public List<Relatorio> listar(){

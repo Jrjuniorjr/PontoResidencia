@@ -7,20 +7,45 @@ import java.util.Date;
 import javax.naming.InitialContext;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedStoredProcedureQueries;
+import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.sql.DataSource;
-import javax.validation.constraints.NotBlank;
 
 
 @Entity
 @Table(name = "tbl_ponto")
+@NamedStoredProcedureQueries({
+    @NamedStoredProcedureQuery(name = "VALIDAR_PONTO_ENTRADA", 
+                               procedureName = "VALIDAR_PONTO_ENTRADA",
+                               parameters = {
+                                     @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class)
+                               }),
+    @NamedStoredProcedureQuery(name = "VALIDAR_PONTO_SAIDA", 
+    procedureName = "VALIDAR_PONTO_SAIDA",
+    parameters = {
+          @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class)
+    })/*,
+    @NamedStoredProcedureQuery(name = "ID_BY_MATRICULA", 
+    procedureName = "ID_BY_MATRICULA",
+    parameters = {
+          @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class),
+          @StoredProcedureParameter(mode = ParameterMode.IN, name = "id", type = Long.class)
+    })*/
+})
+
+
 public class Relatorio {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "relatorio_id")
 	private Long id;
 	
