@@ -1,7 +1,7 @@
 <div>
-    <div>
+    <div id="table_main">
         <!-- TABELA ALUNOS -->
-        <table class="alunos">
+        <table class="container">
             <tr>
                 <th>Matricula</th>
                 <th>Nome</th>
@@ -10,7 +10,7 @@
 
             <tr *ngFor="let aluno of alunos">
                 <td>{{aluno.matricula}}</td>
-                <td>{{aluno.nome}}</td>
+                <td [class.aluno_nome]="true">{{aluno.nome}}</td>
                 <td><button (click)="atualizar(aluno)" > Editar </button> </td>
                 <td><button (click)="remover(aluno)" > Remover </button></td>
                 <td> <button (click)="AbrirTelaRelatorio()"> Consultar </button> </td>
@@ -19,14 +19,14 @@
     </div>
 
     <!--  BOTÕES: CADASTRAR, SAIR, RELATÓRIO -->
-    <div>
+    <br>
+    <div id="control_buttons">
         <div>
-            <button (click)="isCadastroOn = !isCadastroOn; novoAlunoForm.reset()"> Novo Cadastro </button>
-            <button (click)="logout()"> Sair</button>
-        </div>
-        
-        <div [hidden]="isCadastroOn">
-            <button (click)="AbrirTelaRelatorio()"> Relatorio </button>
+            <button id="btn_cadastrar" (click)="isCadastroOn = !isCadastroOn; novoAlunoForm.reset()"> Novo Cadastro </button>
+            <!-- Testando pra ver se eu realmente preciso de [hidden]. Pitt tava usando por algum motivo, então vou deixar aí -->
+            <!-- <button id="btn_relatorio" [hidden]="isCadastroOn" (click)="AbrirTelaRelatorio()"> Relatorio </button><br> -->
+            <button id="btn_relatorio" (click)="AbrirTelaRelatorio()"> Relatorio </button><br>
+            <button id="btn_logout"  (click)="logout()"> Sair</button>
         </div>
     </div>
 

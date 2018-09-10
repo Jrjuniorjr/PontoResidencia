@@ -1,8 +1,9 @@
 import { FormGroup,FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {Relatorio} from '../Relatorio';
+import {Relatorio} from '../model/relatorio';
 import {Router} from '@angular/router'
 import {Aluno} from '../model/aluno'
+import { RelatorioService } from '../services/relatorio.service';
 
 enum Meses {
   Janeiro = 1,
@@ -24,39 +25,47 @@ enum Meses {
   templateUrl: './relatorio.component.html',
   styleUrls: ['./relatorio.component.css']
 })
-
 export class RelatorioComponent implements OnInit {
-
-  constructor(public router:Router) {
-  
-   }
-
-  ngOnInit() {
-  }
-
-  meses:string [] = [
-      'Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
-  ]
-
   alunoSelected:Aluno;
   mesSelected:string;
-
   formRelatorio:FormGroup;
+  private relatorios:Relatorio[] = []
 
-  relatorios : Relatorio[] = [
+  // relatorios : Relatorio[] = [
+  //   {nome:'Glauber',matricula:'1241241',somatorioH:50,entrada:1420,saida:1800},
+  //   {nome:'nas',matricula:'41241',somatorioH:50,entrada:1420,saida:1800},
+  //   {nome:'aegae',matricula:'121421',somatorioH:50,entrada:1420,saida:1800},
+  //   {nome:'braba',matricula:'9129101012',somatorioH:50,entrada:1420,saida:1800},
+  //   {nome:'vava',matricula:'153135',somatorioH:50,entrada:1420,saida:1800}
+  // ]
 
-  {nome:'Glauber',matricula:'1241241',somatorioH:50,entrada:1420,saida:1800},
-  {nome:'nas',matricula:'41241',somatorioH:50,entrada:1420,saida:1800},
-  {nome:'aegae',matricula:'121421',somatorioH:50,entrada:1420,saida:1800},
-  {nome:'braba',matricula:'9129101012',somatorioH:50,entrada:1420,saida:1800},
-  {nome:'vava',matricula:'153135',somatorioH:50,entrada:1420,saida:1800}
+//   [
+//     { "matricula":"1234567890", "nome":"Pitt, The Star Lord", "entrada":"Hora de Entrada", "saida":"Hora de Saida"},
+//     { "matricula":"0987654321", "nome":"Gl400b3r", "entrada":"Hora de Entrada", "saida":"Hora de Saida"},
+//     { "matricula":"6666666666", "nome":"Shido", "entrada":"Hora de Entrada", "saida":"Hora de Saida"},
+//     { "matricula":"0000000000", "nome":"Pedro, THENEZORFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "entrada":"Hora de Entrada", "saida":"Hora de Saida"},
+//     { "matricula":"1357924680", "nome":"BaBsSsSSsxXx", "entrada":"Hora de Entrada", "saida":"Hora de Saida"},
+//     { "matricula":"1020304050", "nome":"DJ0000000000000000000LHA", "entrada":"Hora de Entrada", "saida":"Hora de Saida"}
+// ]
 
-]
 
-alunos : Aluno[] = [
+  // alunos : Aluno[] = [
+  //   {nome:'Glauber',login:'hasuash',matricula:'1241241',id:1,password:'x'},
+  // ]
+  constructor(
+    private router:Router,
+    private relatorioService:RelatorioService
+  ) {}
 
-  {nome:'Glauber',login:'hasuash',matricula:'1241241',id:1,password:'x'},
-]
+  ngOnInit() {
+    this.relatorioService.fetchRelatorio().subscribe( (data:Relatorio[]) => this.relatorios = data)
+  }
+
+  // meses:string [] = [
+  //     'Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'
+  // ]
+
+  
 
 filtroAluno(event) {
 

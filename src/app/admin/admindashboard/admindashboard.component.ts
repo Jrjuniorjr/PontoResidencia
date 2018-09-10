@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Aluno } from '../../model/aluno'
 import {Router, ActivatedRoute} from '@angular/router'
-import { AdminService } from '../../services/admin.service';
+import { AdminService } from '../../guards/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../model/user';
+import { AuthService } from '../../services/auth.service.';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { User } from '../../model/user';
   templateUrl: './admindashboard.component.html',
   styleUrls: ['./admindashboard.component.css']
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome do componente para admin-dashboard, lul
 
   // Form do componente de inserção de novo aluno
   private novoAlunoForm:FormGroup
@@ -25,18 +26,22 @@ export class AdminDashboardComponent implements OnInit {
     private router:Router, 
     private adminRoute:ActivatedRoute,
     private formBuilder:FormBuilder,
+    private auth:AuthService,
     private adminService:AdminService
   ) { }
 
   ngOnInit() {
-    this.adminRoute.queryParamMap.subscribe( params  => {
-      this.user = new User(
-        params.get('matricula'),
-        params.get('nome')
-      )
+    // this.adminRoute.queryParamMap.subscribe( params  => {
+    //   this.user = new User(
+    //     params.get('matricula'),
+    //     params.get('nome')
+    //   )
 
-      console.log("Bem vindo: " + this.user.nome + " - " + this.user.matricula)
-    })
+    //   console.log("Bem vindo: " + this.user.nome + " - " + this.user.matricula)
+    // })
+    this.user = this.auth.authUser 
+    console.log("Bem vindo: " + this.user.nome + " - " + this.user.matricula)
+
 
     this.novoAlunoForm = this.formBuilder.group({
       matricula:  ['', Validators.required],

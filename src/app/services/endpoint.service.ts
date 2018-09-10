@@ -16,6 +16,7 @@ export class EndpointService {
   private API_LOGIN = "/login"
   private API_BATER_PONTO = "/baterPonto" // "serviceAluno/aluno/baterPonto/{matricula}"
   private API_ALUNO = "/serviceAluno"
+  private API_RELATORIO = '/relatorio'
 
   // SERVIÇOS
   private SERVICE_LISTAR_ALUNO = "/alunos"
@@ -28,6 +29,8 @@ export class EndpointService {
   get login() { return this.EndpointBase + this.API_LOGIN }
   get ponto() { return this.EndpointBase + this.API_ALUNO + "/aluno" + this.API_BATER_PONTO }
   get EndpointAluno() { return this.EndpointBase + this.API_ALUNO }
+  get EndpointRelatorio() { return this.EndpointBase + this.API_RELATORIO }
+
 
   /**
    * Listar Aluno Endpoint
@@ -62,7 +65,5 @@ export class EndpointService {
     */
    get updateAluno() { return this.serviceAluno }
   
-
-
 
 }

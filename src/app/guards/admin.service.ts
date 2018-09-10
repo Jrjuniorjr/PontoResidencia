@@ -4,7 +4,7 @@ import { Observable, of, empty } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Aluno } from '../model/aluno'
-import { EndpointService } from './endpoint.service';
+import { EndpointService } from '../services/endpoint.service';
 
 /**
  * AdminService.ts
@@ -30,7 +30,7 @@ export class AdminService {
 
     return this.http.get<HttpResponse<Object>>(this.endpointService.listarAluno, {headers:httpHeaders, observe:"response"})
       .pipe(
-        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]), // TODO: fazer regras de timeout aqui (HttpInterceptor)
+        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]),
         catchError(this.handleError<Aluno[]>("listar alunos", [])) 
       )
   }

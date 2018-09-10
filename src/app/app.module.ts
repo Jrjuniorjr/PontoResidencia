@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <-- NgModel lives here
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { RouterModule} from '@angular/router';
 
 // MOCK REST (DEV)
@@ -15,6 +15,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { AdminDashboardComponent } from './admin/admindashboard/admindashboard.component';
 import { RelatorioComponent } from './relatorio/relatorio.component';
 import { AlunoComponent } from './aluno/aluno.component';
+import { TimeoutInterceptor } from './helper/timeout-interceptor';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,9 @@ import { AlunoComponent } from './aluno/aluno.component';
 
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
