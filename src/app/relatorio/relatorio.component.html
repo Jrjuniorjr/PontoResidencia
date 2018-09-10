@@ -20,20 +20,10 @@
     </select>
 </div> -->
 
-<!-- <ul>
-  <li *ngFor="let relatorio of relatorios">
-    <span>Nome: </span><strong>{{relatorio.nome}} </strong>
-    <span>Matricula: </span><strong>{{relatorio.matricula}} </strong>
-    <span>Somatorio: </span><strong>{{relatorio.somatorioH}} </strong>
-    <span>Entrada: </span><strong>{{relatorio.entrada}} </strong>
-    <span>Saida: </span><strong>{{relatorio.saida}} </strong>
-  
-    </li>
-</ul> -->
-
 <!-- TABELA RELATÓRIO -->
-<div *ngIf="relatorios.length">
-    <table class="relatorio">
+<!-- <div id="table_main" *ngIf="relatorios.length"> -->
+<div id="table_main">
+    <table class="container">
         <tr>
             <th>Matricula</th>
             <th>Nome</th>
@@ -43,14 +33,14 @@
 
         <tr *ngFor="let relatorio of relatorios">
             <td>{{relatorio.matricula}}</td>
-            <td>{{relatorio.nome}}</td>
+            <td [class.aluno_nome]="true">{{relatorio.nome}}</td>
             <td>{{relatorio.entrada}}</td>
             <td>{{relatorio.saida}}</td>
         </tr>
     </table>
 </div>
 
-
-<div>
-  <button (click)="voltarTelaAdmin()">Voltar</button>
+<!-- PORQUE EU SÓ CONSIGO SETAR O ID DO BOTÃO SE A MERDA DO DIV TAMBÉM TIVER UM ID? Amanhã eu procuro no google -->
+<div id="gambiarra_lul">
+  <button id="btn_voltar" (click)="voltarTelaAdmin()">Voltar</button>
 </div>

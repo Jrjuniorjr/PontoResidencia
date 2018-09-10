@@ -1,3 +1,4 @@
+<div *ngIf="false">
 <h1 *ngIf="true"> User Login</h1>
 <div> Qualquer valor serve pra logar (DEV)</div>
 <br>
@@ -66,66 +67,76 @@
 <!-- <div> Login: {{userLogin}}</div>
 <div> Password: {{userPass}}</div> -->
 <router-outlet></router-outlet>
-
+</div>
 
               <!-- ESQUECE ISSO AQUI POR ENQUANTO -->
-<div *ngIf="false">
+<div id="container" *ngIf="true">
 <div class='brand'>
-  <a href='https://www.jamiecoulter.co.uk' target='_blank'>
-    <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/logo.png'>
+  <a href='http://www2.c3.unicap.br/' target='_blank'>
+    <!-- <img src='./assets/unicap.png'> -->
+    <img src='./assets/unicap.png'
+    onmouseover="this.src='./assets/unicap-hover.png'"
+    onmouseout="this.src='./assets/unicap.png'"
+    alt=""/>
   </a>
 </div>
 
+<!-- Entrada para o Login Form -->
 <div class='login'>
   <div class='login_title'>
-    <span>Login to your account</span>
+    <span>Ponto Residência</span>
   </div>
 
-  <div class='login_fields'>
-    <div class='login_fields__user'>
-      <div class='icon'>
-        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+  <form (ngSubmit)="onSubmit()" [formGroup]="userLoginForm">
+
+    <div class='login_fields'>
+      <div class='login_fields__user'>
+        <div class='icon'>
+          <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/user_icon_copy.png'>
+        </div>
+
+        <!-- User Login -->
+      <input #user placeholder='Matrícula' type='number' (keyup.enter)="onSubmit()" formControlName="login">
+        <div class='validation'>
+          <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+        </div>
       </div>
 
-      <!-- User Login -->
-      <input #user placeholder='Username' type='text' (keyup.enter)="login()">
-      <div class='validation'>
-        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
-      </div>
-    </div>
+        <!-- User Password -->
+      <div class='login_fields__password'>
+        <div class='icon'>
+          <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
+        </div>
+        <input placeholder='Senha' type='password' formControlName="password">
 
-      <!-- User Password -->
-    <div class='login_fields__password'>
-      <div class='icon'>
-        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/lock_icon_copy.png'>
+        <!-- <div class='validation'>
+          <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+        </div> -->
       </div>
-      <input placeholder='Password' type='password'>
-      <div class='validation'>
-        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/tick.png'>
+
+      <div class='login_fields__submit'>
+        <!-- <button type='submit' value='Entrar'> Entrar </button> -->
+        <input type='submit' value='Entrar'>
+        <!-- TODO: FUTURO -->
+        <!-- <div class='forgot'>
+          <a href='#'>Forgotten password?</a>
+        </div> -->
       </div>
-    </div>
-    <div class='login_fields__submit'>
-      <input type='submit' value='Log In'>
-      <div class='forgot'>
-        <a href='#'>Forgotten password?</a>
-      </div>
-    </div>
+
+    </div> <!-- End login_fields -->
+  </form>
+
+  <!-- Créditos: Jamie Coulter -->
+  <!-- <div class='love'>
+    <p>Made with <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/love_copy.png" /> by <a href='https://www.jamiecoulter.co.uk'
+        target='_blank'> Jcoulterdesign </a></p>
+  </div> -->
+
+  <div class="disclaimer">
+    <p id="dev">Qualquer valor serve pra logar</p> <br><br>
+    <p id="dev2">(DEV)</p>
   </div>
-  <div class='success'>
-    <h2>Authentication Success</h2>
-    <p>Welcome back</p>
-  </div>
-  <div class='disclaimer'>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce semper laoreet placerat. Nullam semper auctor justo,
-      rutrum posuere odio vulputate nec.</p>
-  </div>
-</div>
-<div class='authent'>
-  <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/puff.svg'>
-  <p>Authenticating...</p>
-</div>
-<div class='love'>
-  <p>Made with <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/love_copy.png" /> by <a href='https://www.jamiecoulter.co.uk'
-      target='_blank'> Jcoulterdesign </a></p>
-</div>
-</div>
+
+</div> <!-- End container -->
+
+<router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from '../services/auth.service.';
 import {Router} from '@angular/router';
@@ -10,7 +10,7 @@ import { User } from '../model/user';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   // Representa o Form do Template
   private userLoginForm:FormGroup
@@ -25,12 +25,14 @@ export class LoginComponent implements OnInit {
   // É preferivel utilizar ngOnInit em vez do constructor() para chamadas de Serviços
   ngOnInit() {
     this.userLoginForm = this.formBuilder.group({
-      login: ['1', Validators.required],
-      password:['1', Validators.required]
+      login: ['', Validators.required],
+      password:['', Validators.required]
     })
 
-    this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
+    // this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
   }
+
+  ngOnDestroy() { }
 
   /**
    * Chama o serviço para fazer autenticação (login)
@@ -54,6 +56,11 @@ export class LoginComponent implements OnInit {
    * Chamado pelo botão Submit
    */
   onSubmit() {
+    console.log(this.userLogin)
+    console.log(this.userPassword)
+
+    if(!this.userLogin || !this.userPassword) return
+    
     this.login()
     // this.userLoginForm.reset()
   }

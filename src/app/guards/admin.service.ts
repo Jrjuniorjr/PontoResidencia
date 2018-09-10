@@ -30,7 +30,7 @@ export class AdminService {
 
     return this.http.get<HttpResponse<Object>>(this.endpointService.listarAluno, {headers:httpHeaders, observe:"response"})
       .pipe(
-        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]), // TODO: fazer regras de timeout aqui (HttpInterceptor)
+        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]),
         catchError(this.handleError<Aluno[]>("listar alunos", [])) 
       )
   }
