@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +28,13 @@ public class ControllerAluno {
     AlunoRepository daoAluno;
 
     @PostMapping
-    public void inserir(@RequestBody Aluno aluno) {
-        daoAluno.save(aluno);
+    public Aluno inserir(@RequestBody Aluno aluno) {
+        return daoAluno.save(aluno);
         
     }
     
     @PostMapping("/baterPonto/{matricula}")
-    public void setbaterPonto(@PathVariable String matricula ) {
+    public void baterPonto(@PathVariable String matricula ) {
     	
     }
     
@@ -43,9 +44,8 @@ public class ControllerAluno {
 
     @DeleteMapping("/{matricula}")
     public void remover(@PathVariable String matricula) {
-        //
-        //aluno = daoAluno.getOne(2015114563);
-        //daoAluno.delete(aluno);
+        Aluno aluno = daoAluno.getOne(matricula);
+        daoAluno.delete(aluno);
         
     }
 
@@ -61,9 +61,13 @@ public class ControllerAluno {
     	return daoAluno.findAll();
     }
 
-    /*@PutMapping("/aluno")
-    public void atualizar(@RequestBody Aluno aluno) {
-        daoAluno.update(aluno)
-    }*/
+    @PutMapping("/{matricula}")
+    public Aluno alterarSenha(@PathVariable String matricula, @RequestBody String senha) { 
+    	
+    	Aluno aluno = daoAluno.getOne(matricula);
+    	aluno.setSenha(senha);
+    	
+        return daoAluno.save(aluno);
+    }
     
 }

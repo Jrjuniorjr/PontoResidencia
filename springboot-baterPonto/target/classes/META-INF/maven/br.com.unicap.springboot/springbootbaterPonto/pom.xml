@@ -10,7 +10,7 @@
 
     <name>springboot-baterPonto</name>
     <description>Demo project for Spring Boot</description>
-
+    
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -45,8 +45,16 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
         </dependency>
-
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+   			<artifactId>hibernate-core</artifactId>
+		</dependency>
 		
+		<dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>

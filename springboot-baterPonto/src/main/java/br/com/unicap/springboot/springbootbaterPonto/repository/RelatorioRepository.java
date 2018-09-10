@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Relatorio;;
 
-public interface RelatorioRepository extends JpaRepository<Relatorio, String>{
+public interface RelatorioRepository extends JpaRepository<Relatorio, Long>{
 
 
 }

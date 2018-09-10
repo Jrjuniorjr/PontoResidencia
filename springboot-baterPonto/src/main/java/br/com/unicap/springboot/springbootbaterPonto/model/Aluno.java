@@ -2,21 +2,14 @@ package br.com.unicap.springboot.springbootbaterPonto.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 
 
 @Entity
@@ -29,7 +22,6 @@ public class Aluno {
     private Long id;
     
     @Id
-    @NotBlank
     @Column(name = "aluno_matr")
     private String matricula;
 
@@ -41,51 +33,24 @@ public class Aluno {
     @Column(name = "aluno_senha")
     private String senha;
     
-    @NotBlank
-    //@ManyToOne
-    //@JoinColumn(name = "prof_id")
-    //private Professor profid;
-    @Column(name = "prof_id")
-    private Long profid;
-    
-    
-    //Relação entre Professor x Aluno
-    /*@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn (name = "prof_id")
-    private Professor professor;*/
-    
-     
-    /*public Aluno(Long id, String matricula, String nome, int senha) {
-        //this.id = id;
-        this.matricula = matricula;
-        this.nome = nome;
-        this.senha = senha;
-    }*/
+    @ManyToOne
+    @JoinColumn(name = "prof_id")
+    private Professor professor;
 
     public Aluno() {
     }
 	
-    /*public Professor getProfid() {
-	return profid;
-}
+    public Professor getProfid() {
+	return professor;
+    }
 
-public void setProfid(Professor profid) {
-	this.profid = profid;
-}*/
-    
-    
+    public void setProfid(Professor professor) {
+	this.professor = professor;
+    }
     
     public Long getId() {
     	return id;
     }
-	
-	public Long getProfid() {
-		return profid;
-	}
-
-	public void setProfid(Long profid) {
-		this.profid = profid;
-	}
 
 	public void setId(Long id) {
     	this.id = id;
@@ -114,13 +79,14 @@ public void setProfid(Professor profid) {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    @Override
-    public String toString() {
-        return "Aluno{" + "matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + ", profid=" + profid + '}';
-    }
     
     @Override
+	public String toString() {
+		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + ", professor="
+				+ professor + "]";
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;

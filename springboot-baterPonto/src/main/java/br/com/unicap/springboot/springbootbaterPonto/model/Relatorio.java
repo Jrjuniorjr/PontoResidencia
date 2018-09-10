@@ -5,84 +5,52 @@ import java.sql.ResultSet;
 import java.util.Date;
 
 import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.sql.DataSource;
 import javax.validation.constraints.NotBlank;
-
-import org.springframework.data.jpa.repository.query.Procedure;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.mysql.cj.jdbc.CallableStatement;
-
-import ch.qos.logback.core.Context;
-import ch.qos.logback.core.db.DataSourceConnectionSource;
 
 
 @Entity
 @Table(name = "tbl_ponto")
 public class Relatorio {
-    
-    
-    @Id
-    @Column(name = "aluno_matr")
-    private String alunomatricula;
-    
-    @Column(name = "aluno_id")
-    private Long alunoid;
-    
-    @Column(name = "prof_id")
-    private Long profid;
+	
+	@Id
+	@Column(name = "relatorio_id")
+	private Long id;
+	
+    @ManyToOne
+    @JoinColumn(name = "aluno_id")
+    private Aluno aluno;
+  
+    @ManyToOne
+    @JoinColumn(name = "prof_id")
+    private Professor professor;
     
     @Column(name = "hora_ent")
     private Date horaent;
 
     @Column(name = "hora_sai")
     private Date horasai;
-
     
     public Relatorio() {
   
     }
-
-    public String getAlunomatricula() {
-		return alunomatricula;
+  
+	public Long getId() {
+		return id;
 	}
 
-	public void setAlunomatricula(String alunomatricula) {
-		this.alunomatricula = alunomatricula;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public Long getProfid() {
-		return profid;
-	}
 
-	public void setProfid(Long profid) {
-		this.profid = profid;
-	}
-
-	public void setAlunoid(Long alunoid) {
-		this.alunoid = alunoid;
-	}
-
-	public Long getAlunoid() {
-		return alunoid;
-	}
-    
-	public void setAlunomatr(Long alunoid) {
-		this.alunoid = alunoid;
-	}
 
 	public Date getHoraent() {
 		return horaent;
@@ -98,6 +66,28 @@ public class Relatorio {
 
 	public void setHorasai(Date horasai) {
 		this.horasai = horasai;
+	}
+	
+	public Aluno getAluno() {
+		return aluno;
+	}
+
+	public void setAluno(Aluno aluno) {
+		this.aluno = aluno;
+	}
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	@Override
+	public String toString() {
+		return "Relatorio [aluno=" + aluno + ", professor=" + professor + ", horaent=" + horaent + ", horasai="
+				+ horasai + "]";
 	}
 
 	public String matriculaById(Long alunoid) {
@@ -128,7 +118,7 @@ public class Relatorio {
 		dss = (DataSource)ctxs.lookup("jdbc:mysql://localhost:3306/db_sistemaponto");
 		Connection connection = dss.getConnection();
 		java.sql.CallableStatement procs = connection.prepareCall("{ select MATRICULA_BY_ID (id)}");            
-		procs.setLong("id", alunoid);
+		//procs.setLong("id", alunoid);
 		procs.execute();
 		ResultSet rs = procs.getResultSet();
 		nome = rs.getString("aluno_nome");
@@ -139,19 +129,17 @@ public class Relatorio {
 		return nome;
 	}
 
-	@Override
-    public String toString() {
-		return "Relatorio{" +"matricula:"+ alunomatricula + ", nome:" + nomeById(alunoid)+", entrada:"+horaent+", saida:"+horasai+'}';
-    }
     
-    @Override
+    
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((alunoid == null) ? 0 : alunoid.hashCode());
+		result = prime * result + ((aluno == null) ? 0 : aluno.hashCode());
 		result = prime * result + ((horaent == null) ? 0 : horaent.hashCode());
 		result = prime * result + ((horasai == null) ? 0 : horasai.hashCode());
-		result = prime * result + ((profid == null) ? 0 : profid.hashCode());
+		result = prime * result + ((professor == null) ? 0 : professor.hashCode());
 		return result;
 	}
 
@@ -164,10 +152,10 @@ public class Relatorio {
 		if (getClass() != obj.getClass())
 			return false;
 		Relatorio other = (Relatorio) obj;
-		if (alunoid == null) {
-			if (other.alunoid != null)
+		if (aluno == null) {
+			if (other.aluno != null)
 				return false;
-		} else if (!alunoid.equals(other.alunoid))
+		} else if (!aluno.equals(other.aluno))
 			return false;
 		if (horaent == null) {
 			if (other.horaent != null)
@@ -179,10 +167,10 @@ public class Relatorio {
 				return false;
 		} else if (!horasai.equals(other.horasai))
 			return false;
-		if (profid == null) {
-			if (other.profid != null)
+		if (professor == null) {
+			if (other.professor != null)
 				return false;
-		} else if (!profid.equals(other.profid))
+		} else if (!professor.equals(other.professor))
 			return false;
 		return true;
 	}
