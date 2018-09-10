@@ -8,6 +8,8 @@ package br.com.unicap.springboot.springbootbaterPonto.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,22 +30,30 @@ public class ControllerAluno {
     AlunoRepository daoAluno;
 
     @PostMapping
-    public Aluno inserir(@RequestBody Aluno aluno) {
-        return daoAluno.save(aluno);
+    public ResponseEntity<Aluno> inserir(@RequestBody Aluno aluno) {
+        Aluno alunoSalvo = daoAluno.save(aluno);
+        return ResponseEntity.status(HttpStatus.CREATED).body(alunoSalvo);
         
     }
 
     @DeleteMapping("/{matricula}")
-    public void remover(@PathVariable String matricula) {
+    public ResponseEntity<Aluno> remover(@PathVariable String matricula){
         Aluno aluno = daoAluno.getOne(matricula);
-        daoAluno.delete(aluno);
-        
+        if(aluno != null) {
+        	daoAluno.delete(aluno);
+        	return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();       
     }
 
     @GetMapping("/{matricula}")
-    public Aluno consultar(@PathVariable String matricula) {
-    	
-    	return daoAluno.getOne(matricula);
+    public ResponseEntity<Aluno> consultar(@PathVariable String matricula) {
+    	Aluno aluno = daoAluno.getOne(matricula);
+    	if(aluno == null) {
+    		return ResponseEntity.notFound().build();    	}
+    	else {
+    		return ResponseEntity.ok(aluno);
+    	}
              
     }
     
@@ -53,12 +63,16 @@ public class ControllerAluno {
     }
 
     @PutMapping("/{matricula}")
-    public Aluno alterarSenha(@PathVariable String matricula, @RequestBody String senha) { 
+    public ResponseEntity<Aluno> alterarSenha(@PathVariable String matricula, @RequestBody String senha) {
     	
     	Aluno aluno = daoAluno.getOne(matricula);
-    	aluno.setSenha(senha);
     	
-        return daoAluno.save(aluno);
-    }
-    
+    	if(aluno == null) {
+    		return ResponseEntity.notFound().build();
+    	}else {
+    		aluno.setSenha(senha);
+    		Aluno alunoAlterado = daoAluno.save(aluno);
+    		return ResponseEntity.status(HttpStatus.OK).body(alunoAlterado);
+    	}
+    } 
 }

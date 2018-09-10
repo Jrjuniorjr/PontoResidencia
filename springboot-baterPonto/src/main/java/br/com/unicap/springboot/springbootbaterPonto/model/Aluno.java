@@ -39,16 +39,16 @@ public class Aluno {
 
     public Aluno() {
     }
-	
-    public Professor getProfid() {
-	return professor;
-    }
-
-    public void setProfid(Professor professor) {
-	this.professor = professor;
-    }
     
-    public Long getId() {
+    public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Long getId() {
     	return id;
     }
 
