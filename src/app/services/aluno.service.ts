@@ -53,7 +53,7 @@ export class AlunoService {
       let item = matricula.replace('/', '-')
 
       if(!localStorage.getItem(item))
-        localStorage.setItem(item, new Date().toString())
+        localStorage.setItem(item, new Date().toLocaleString())
     }
 
     public clearStorage(mat:string) { localStorage.clear(); localStorage.removeItem(mat) }

@@ -47,7 +47,7 @@ export class AlunoComponent implements OnInit {
 
   baterPonto(opcao:string) {
     // console.log('baterPontoEntrada aluno.component')
-    this.alunoService.baterPontoEntrada(this.user.matricula,opcao).subscribe(data => { console.log(data); this.updateUserPonto(); )
+    this.alunoService.baterPontoEntrada(this.user.matricula,opcao).subscribe(data => { console.log(data); this.updateUserPonto(); })
   }
 
   
