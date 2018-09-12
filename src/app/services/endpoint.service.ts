@@ -7,16 +7,21 @@
 
 import { Injectable } from '@angular/core';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root' }) 
 export class EndpointService {
   // BASE
-  private EndpointBase = "http://demo0998197.mockable.io"
+  public EndpointBase = "http://localhost:8080"
   
   // SERVICE ENDPOINTS BASE
-  private API_LOGIN = "/login"
+  public API_LOGIN_ALUNO = "/aluno/" 
+  public API_LOGIN_PROFESSOR = "/professor/" 
   private API_BATER_PONTO = "/baterPonto" // "serviceAluno/aluno/baterPonto/{matricula}"
-  private API_ALUNO = "/serviceAluno"
+  private API_BATER_PONTO_ENTRADA = "/entrada"
+  private API_BATER_PONTO_SAIDA = "/saida"
+  private API_ALUNO = "/aluno"
   private API_RELATORIO = '/relatorio'
+  private API_LOGIN = '/'
+
 
   // SERVIÇOS
   private SERVICE_LISTAR_ALUNO = "/alunos"
@@ -27,7 +32,7 @@ export class EndpointService {
   constructor() { }
 
   get login() { return this.EndpointBase + this.API_LOGIN }
-  get ponto() { return this.EndpointBase + this.API_ALUNO + "/aluno" + this.API_BATER_PONTO }
+  //get ponto() { return this.EndpointBase + this.API_ALUNO + "/aluno" + this.API_BATER_PONTO }
   get EndpointAluno() { return this.EndpointBase + this.API_ALUNO }
   get EndpointRelatorio() { return this.EndpointBase + this.API_RELATORIO }
 
@@ -37,7 +42,7 @@ export class EndpointService {
    * { JSON }
    * @return  - { matricula:string, nome:string , senha:number } as Aluno
    */
-  get listarAluno() { return this.EndpointAluno + this.SERVICE_LISTAR_ALUNO }
+  get listarAluno() { return this.EndpointAluno }
 
   /**
    * Endpoint padrão que varia baseado no HTTP OPERATION + URL PARAMS
@@ -52,18 +57,22 @@ export class EndpointService {
   /**
    * DELETE /{matriculaAluno} 
    */
-  get removerAluno() { return this.serviceAluno }
+  get removerAluno() { return this.EndpointAluno }
 
    /**
     * POST /{matriculaProf} -> Req.Body: Aluno()   => Create
     */
-  get inserirAluno() { return this.serviceAluno }
+  get inserirAluno() { return this.EndpointAluno }
 
    /**
     * PUT /{matriculaProf} -> Req.Body: Aluno()   => Update
     * //TODO: back end esqueceu do matriculaProf
     */
-   get updateAluno() { return this.serviceAluno }
+   get updateAluno() { return this.EndpointAluno }
   
+
+   get baterPontoEntrada() {return this.EndpointRelatorio + this.API_BATER_PONTO_ENTRADA}
+
+   get baterPontoSaida() {return this.EndpointRelatorio + this.API_BATER_PONTO_SAIDA}
 
 }

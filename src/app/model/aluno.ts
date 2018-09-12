@@ -4,12 +4,12 @@ export class Aluno {
     constructor(
       public matricula:string,
       public nome:string,
-      public password?:string,
+      public senha?:string,
       public id?:number,
       public login?:string
     ) {
-      if(!password)
-        this.password = "default123" // TODO: REMOVER
+      if(!senha)
+        this.senha = "default123" // TODO: REMOVER
     }
     
 

@@ -17,25 +17,31 @@ export class AlunoService {
     private endpointService:EndpointService
   ) { }
 
-    baterPonto(matricula:string) {
+    baterPontoEntrada(matricula:string, opcao:string) {
       let httpHeaders = new HttpHeaders({
         'Content-Type' : 'application/json',
         'Cache-Control': 'no-cache'
       });
+      
+      let endpoint:string
+      if(opcao === "/entrada")
+        endpoint = this.endpointService.baterPontoEntrada + "/" + matricula
+      else
+        endpoint = this.endpointService.baterPontoSaida + "/" + matricula
 
-      const endpoint = this.endpointService.ponto + "/" + matricula
+        //const endpointSaida = this.endpointService.baterPontoSaida + "/" + matricula
   
+      console.log(endpoint)
       // Quero receber a resposta do servidor (Http Response) crua (completa) em vez do angular tentar converter a resposta em um Objeto, logo eu digo que o .post irá receber um HttpResponse<Object> (Angular)
       // Pra fazer com que o Angular me retorne o Http Response precisa passar o parâmetro { "observe" : "response" } no Options do .post
-      // return this.http.post<HttpResponse<Object>>(endpoint, null, {headers:httpHeaders, observe:"response"}).pipe(
-      //   tap( (data:HttpResponse<Object>) => { 
-      //     if(data && data.ok)
-      //       this.setPonto(matricula)
-      //   }),
-      //   catchError(this.handleError("bater-ponto", {})
-      // ))
+      return this.http.get<HttpResponse<Object>>(endpoint, {headers:httpHeaders, observe:"response"}).pipe(
+        tap( (data:HttpResponse<Object>) => {          
+            this.setPonto(matricula+opcao)  
+        }),
+        catchError(this.handleError("bater-ponto", {})
+      ))
 
-      this.setPonto(matricula)
+      //this.setPonto(matricula)
     }
 
     public getPonto(item:string) {
@@ -43,11 +49,14 @@ export class AlunoService {
     }
 
     private setPonto(matricula:string) {
-      let item = this.getPonto(matricula+"-entrada")? matricula+"-saida" : matricula+"-entrada"
+      // let item = this.getPonto(matricula+"-entrada")? matricula+"-saida" : matricula+"-entrada"
+      let item = matricula.replace('/', '-')
 
       if(!localStorage.getItem(item))
         localStorage.setItem(item, new Date().toString())
     }
+
+    public clearStorage(mat:string) { localStorage.clear(); localStorage.removeItem(mat) }
 
     
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Aluno } from '../../model/aluno'
 import {Router, ActivatedRoute} from '@angular/router'
-import { AdminService } from '../../guards/admin.service';
+import { AdminService } from '../../services/admin.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../model/user';
 import { AuthService } from '../../services/auth.service.';
@@ -19,6 +19,7 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
   private user:User
   private alunos:Aluno[] = []
   private isCadastroOn:boolean = false;
+  private inserirMode = "cadastro"
   // cont:number = 0;
   // selectedUser: Aluno;
 
@@ -53,18 +54,19 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
     this.updateAlunoList()
   }
 
-  AbrirTelaRelatorio() {
-    this.router.navigate(["/relatorio"]);
+  AbrirTelaRelatorio(aluno:Aluno) {
+    this.router.navigate(["/relatorio"], { queryParams: {matricula: aluno? aluno.matricula : ""}});
   }
 
   logout() {
-    this.user = null
+    this.auth.logout()
     this.router.navigate([""])
   }
 
   // TODO: Fazer EDIÇÃO DE ALUNO (Update)
   atualizar(aluno:Aluno) : void {
     this.isCadastroOn = true;
+    this.inserirMode = "atualizar"
     this.novoAlunoForm.get('matricula').setValue(aluno.matricula)
     this.novoAlunoForm.get('nome').setValue(aluno.nome)
     this.novoAlunoForm.get('password').reset()
@@ -73,9 +75,11 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
   remover(user: Aluno) {
     this.adminService.removerAluno(user.matricula)
       .subscribe( (isStatusOk:boolean) => {
-        if(isStatusOk)
+        if(isStatusOk) {
+          console.log(isStatusOk)
+          this.alunos = this.removerAluno(user.matricula)
           // this.updateAlunoList()
-          this.alunos = this.mockRemoveUser(user.matricula) // TODO: Remover mock
+        }
         else
           console.log("Erro removendo")
       })
@@ -89,13 +93,21 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
       this.novoAlunoForm.get('password').value
     )
 
-    // Lul, acabei de descobrir que é o .subscribe() que consome o Observable, se não usar nada do observable é utilizado jjjjjjj cu
-    this.adminService.inserirAluno(this.user.matricula, aluno)
-      .subscribe(data => { 
-        console.log("Pos inserir")
-        this.alunos.push(aluno) // TODO: remover esta bosta
-      })
-
+    if(this.inserirMode === 'cadastro') {
+      // Lul, acabei de descobrir que é o .subscribe() que consome o Observable, se não usar nada do observable é utilizado jjjjjjj cu
+      this.adminService.inserirAluno(aluno)
+        .subscribe(data => { 
+          this.updateAlunoList()
+          // this.alunos.push(aluno) // TODO: remover esta bosta
+        })
+    } else {
+      this.adminService.updateAluno(this.user.matricula, aluno)
+        .subscribe(data => { 
+          this.updateAlunoList()
+          // this.alunos.push(aluno) // TODO: remover esta bosta
+          this.inserirMode = "cadastro"
+        })
+    }
     // aluno = new Aluno(this.cont++, matricula ,nome , senha, 'x');
     // this.alunos.push(aluno);
   }
@@ -116,7 +128,8 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
   // }
 
   // THE MOCKING GOD
-  mockRemoveUser(deleted:string) {
+  removerAluno(deleted:string) {
+    // this.adminService.removerAluno(deleted).subscribe(resposta => console.log(resposta))
     return this.alunos.filter(aluno => aluno.matricula != deleted)
   }
 

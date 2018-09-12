@@ -13,7 +13,7 @@
                 <td [class.aluno_nome]="true">{{aluno.nome}}</td>
                 <td><button (click)="atualizar(aluno)" > Editar </button> </td>
                 <td><button (click)="remover(aluno)" > Remover </button></td>
-                <td> <button (click)="AbrirTelaRelatorio()"> Consultar </button> </td>
+                <td> <button (click)="AbrirTelaRelatorio(aluno)"> Consultar </button> </td>
             </tr>
         </table>
     </div>
