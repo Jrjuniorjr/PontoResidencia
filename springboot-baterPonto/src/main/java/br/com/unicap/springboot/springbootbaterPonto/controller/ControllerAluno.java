@@ -85,7 +85,7 @@ public class ControllerAluno {
     	return daoAluno.listarAlunos();
     }    
 
-    @PutMapping("/{matricula}")
+    @PutMapping("/alterarSenha/{matricula}")
     public ResponseEntity<Aluno> alterarSenha(@PathVariable String matricula, @RequestBody String senha) {
     	
     	Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
 
@@ -18,34 +13,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
 import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
+import br.com.unicap.springboot.springbootbaterPonto.repository.AlunoRepository;
 import br.com.unicap.springboot.springbootbaterPonto.repository.ProfessorRepository;
 
 @RestController
-@RequestMapping("/professor")
-public class ControllerProfessor {
+@RequestMapping("/login/")
+public class ControllerLogin {
     @Autowired
     ProfessorRepository daoProfessor;
-    
-    @PostMapping("/cadastrar/")
-    public ResponseEntity<Professor> inserir(@RequestBody Professor professor) {
-        Professor professorSalvo = daoProfessor.save(professor);
-        return ResponseEntity.status(HttpStatus.CREATED).body(professorSalvo);
-        
-    }
-    
-    @GetMapping("/{matricula}")
-    public ResponseEntity<Professor> consultar(@PathVariable String matricula) {
-        Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
-        if(professor == null) {
-        	return ResponseEntity.notFound().build();
-        }else {
-        	return ResponseEntity.ok(professor);
-        }
-    }
-    
+    @Autowired
+    AlunoRepository daoAluno;
+
     @PostMapping
+    public ResponseEntity<?> login (@RequestBody JSONWrappedObject body) {
+    	
+    	System.out.println(body);
+    	
+    	return null;
+    }
+   
     public ResponseEntity<Professor> loginProfessor (@RequestBody Professor professorLogin) {
     	
     	ResponseEntity<Professor> entity = null;
@@ -60,11 +51,27 @@ public class ControllerProfessor {
     	}
     	
     	return entity;
+    	
     }
     
-    @GetMapping
-    public ArrayList<Professor> listar(){
-        return daoProfessor.listarProfessor();
+    public ResponseEntity<Aluno> loginAluno (@RequestBody Aluno alunoLogin) {
+    	
+    	ResponseEntity<Aluno> entity = null;
+    	
+    	System.out.println(alunoLogin);
+    	
+    	if(daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula())!=null) {
+    		Aluno aluno = daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula());
+    		System.out.println(aluno);
+    		if(aluno.getSenha() == alunoLogin.getSenha()) {
+    			entity = ResponseEntity.ok(aluno);
+    		}    
+    	}else{
+    		entity = ResponseEntity.notFound().build();
+    	}
+    	
+    	return entity;
+    	
     }
     
 }
