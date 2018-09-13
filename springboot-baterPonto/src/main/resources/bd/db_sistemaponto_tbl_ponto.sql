@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_sistemaponto
+-- Host: 127.0.0.1    Database: db_sistemaponto
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `tbl_ponto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_ponto` (
-  `aluno_id` int(3) DEFAULT NULL,
-  `prof_id` int(3) DEFAULT NULL,
-  `hora_ent` datetime NOT NULL,
+  `aluno_id` int(11) DEFAULT NULL,
+  `prof_id` int(11) DEFAULT NULL,
+  `hora_ent` datetime DEFAULT NULL,
   `hora_sai` datetime DEFAULT NULL,
   `relatorio_id` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`relatorio_id`),
@@ -33,7 +33,7 @@ CREATE TABLE `tbl_ponto` (
   KEY `prof_id` (`prof_id`),
   CONSTRAINT `tbl_ponto_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `tbl_alunos` (`aluno_id`),
   CONSTRAINT `tbl_ponto_ibfk_2` FOREIGN KEY (`prof_id`) REFERENCES `tbl_professor` (`prof_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,6 @@ CREATE TABLE `tbl_ponto` (
 
 LOCK TABLES `tbl_ponto` WRITE;
 /*!40000 ALTER TABLE `tbl_ponto` DISABLE KEYS */;
-INSERT INTO `tbl_ponto` VALUES (13,NULL,'2018-09-13 00:16:14',NULL,22);
 /*!40000 ALTER TABLE `tbl_ponto` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-12 17:30:05
+-- Dump completed on 2018-09-13 14:01:35

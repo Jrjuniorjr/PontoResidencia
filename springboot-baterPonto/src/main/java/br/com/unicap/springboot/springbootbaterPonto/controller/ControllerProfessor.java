@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
 import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
 import br.com.unicap.springboot.springbootbaterPonto.repository.ProfessorRepository;
 
@@ -37,7 +36,7 @@ public class ControllerProfessor {
     
     @GetMapping("/{matricula}")
     public ResponseEntity<Professor> consultar(@PathVariable String matricula) {
-        Professor professor = daoProfessor.listarProfessorByMatricula(matricula).get(0);
+        Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
         if(professor == null) {
         	return ResponseEntity.notFound().build();
         }else {

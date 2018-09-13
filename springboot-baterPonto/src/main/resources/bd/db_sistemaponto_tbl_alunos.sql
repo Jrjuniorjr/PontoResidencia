@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_sistemaponto
+-- Host: 127.0.0.1    Database: db_sistemaponto
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -29,7 +29,7 @@ CREATE TABLE `tbl_alunos` (
   `aluno_senha` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`aluno_id`),
   UNIQUE KEY `aluno_matr` (`aluno_matr`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,6 @@ CREATE TABLE `tbl_alunos` (
 
 LOCK TABLES `tbl_alunos` WRITE;
 /*!40000 ALTER TABLE `tbl_alunos` DISABLE KEYS */;
-INSERT INTO `tbl_alunos` VALUES ('2015114563',13,'Avelino Gomez Alonso Junior','1510');
 /*!40000 ALTER TABLE `tbl_alunos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-12 17:30:05
+-- Dump completed on 2018-09-13 14:01:35

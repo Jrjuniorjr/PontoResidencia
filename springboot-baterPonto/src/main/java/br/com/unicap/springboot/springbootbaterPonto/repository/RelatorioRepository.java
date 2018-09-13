@@ -2,10 +2,11 @@ package br.com.unicap.springboot.springbootbaterPonto.repository;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.query.Procedure;
-import org.springframework.data.repository.query.Param;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
 import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
@@ -13,39 +14,56 @@ import br.com.unicap.springboot.springbootbaterPonto.model.Relatorio;;
 
 public interface RelatorioRepository extends JpaRepository<Relatorio, Long>{
 	
-	@Procedure(name = "VALIDAR_PONTO_ENTRADA")
-    public void VALIDAR_PONTO_ENTRADA(@Param("matricula") String matricula);
 	
-	@Procedure(name = "VALIDAR_PONTO_SAIDA")
-    public void VALIDAR_PONTO_SAIDA(@Param("matricula") String matricula);
-
 	@Query(value = "SELECT * FROM tbl_ponto WHERE aluno_id = (select aluno_id from tbl_alunos where aluno_matr = ?1)",nativeQuery = true)
-    public ArrayList<Relatorio> listarRelatoriosByMatricula(String matricula);
+    public ArrayList<Relatorio> listarRelatoriosByMatriculaAluno(String matricula);
+	
+	@Query(value = "SELECT * FROM tbl_ponto WHERE prof_id = (select prof_id from tbl_professor where prof_matr = ?1)",nativeQuery = true)
+    public ArrayList<Relatorio> listarRelatoriosByMatriculaProfessor(String matricula);
 	
 	@Query(value = "SELECT * FROM tbl_ponto",nativeQuery = true)
 	public ArrayList<Relatorio> listarRelatorios();
 	
-	@Query(value = "SELECT * FROM tbl_alunos",nativeQuery = true)
-	public ArrayList<Aluno> listarAlunos();
-	
+	//Resgatar Aluno e Professor
 	@Query(value = "SELECT * FROM tbl_alunos WHERE aluno_matr = ?1",nativeQuery = true)
-    Aluno listarAlunoByMatricula(String matricula);
+    public Aluno getAlunoByMatricula(String matricula);
 	
 	@Query(value = "SELECT * FROM tbl_professor where prof_matr = ?1",nativeQuery = true)
 	public Professor getProfessorByMatricula(String matricula);
 	
-	@Query(value = "INSERT INTO tbl_ponto (prof_id,hora_ent) values (1?,sysdate())",nativeQuery = true)
-	public void inserirTabelaProfessor(Long id);
+	//Bater ponto
+	@Modifying
+	@Query(value = "INSERT INTO tbl_ponto (prof_id,hora_ent) values ((select prof_id from tbl_professor where prof_matr = ?1),sysdate())",nativeQuery = true)
+	@Transactional
+	public void baterPontoProfessorEntrada(String matricula);
 	
-	@Query(value = "INSERT INTO tbl_ponto (aluno_id,hora_ent) values (1?,sysdate())",nativeQuery = true)
-	public void inserirTabelaAluno(Long id);
+	@Modifying
+	@Query(value = "UPDATE tbl_ponto SET hora_sai=sysdate() WHERE prof_id=(select prof_id from tbl_professor where prof_matr = ?1) and day(hora_ent)=day(sysdate() )",nativeQuery = true)
+	@Transactional
+	public void baterPontoProfessorSaida(String matricula);
 	
-	@Query(value = "select count(*) from tbl_ponto where aluno_id = ?1 and DAY(hora_ent)=DAY(sysdate())",nativeQuery = true)
-	public int verificarEntradaAlunoDia(int id);
+	@Modifying
+	@Query(value = "INSERT INTO tbl_ponto (aluno_id,hora_ent) values ((select aluno_id from tbl_alunos where aluno_matr = ?1),sysdate())",nativeQuery = true)
+	@Transactional
+	public void baterPontoAlunoEntrada(String matricula);
 	
-	@Query(value = "select count(*) from tbl_ponto where prof_id = ?1 and DAY(hora_ent)=DAY(sysdate())",nativeQuery = true)
-	public int verificarEntradaProfessorDia(int id);
+	@Modifying
+	@Query(value = "UPDATE tbl_ponto SET hora_sai=sysdate() WHERE aluno_id=(select aluno_id from tbl_alunos where aluno_matr = ?1) and day(hora_ent)=day(sysdate() )",nativeQuery = true)
+	@Transactional
+	public void baterPontoAlunoSaida(String matricula);
 	
+	//Verificação se já bateu ponto
+	@Query(value = "select count(*) from tbl_ponto where aluno_id = (select aluno_id from tbl_alunos where aluno_matr = ?1) and DAY(hora_ent)=DAY(sysdate())",nativeQuery = true)
+	public int verificarEntradaAlunoDia(String matricula);
+	
+	@Query(value = "select count(*) from tbl_ponto where aluno_id = (select aluno_id from tbl_alunos where aluno_matr = ?1) and DAY(hora_sai)=DAY(sysdate())",nativeQuery = true)
+	public int verificarSaidaAlunoDia(String matricula);
+	
+	@Query(value = "select count(*) from tbl_ponto where prof_id = (select prof_id from tbl_professor where prof_matr = ?1) and DAY(hora_ent)=DAY(sysdate())",nativeQuery = true)
+	public int verificarEntradaProfessorDia(String matricula);
+	
+	@Query(value = "select count(*) from tbl_ponto where prof_id = (select prof_id from tbl_professor where prof_matr = ?1) and DAY(hora_sai)=DAY(sysdate())",nativeQuery = true)
+	public int verificarSaidaProfessorDia(String matricula);
 	
 	
 }

@@ -9,26 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedStoredProcedureQueries;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
-
-
-@NamedStoredProcedureQueries({
-    @NamedStoredProcedureQuery(name = "VALIDAR_PONTO_ENTRADA", 
-                               procedureName = "VALIDAR_PONTO_ENTRADA",
-                               parameters = {
-                                     @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class)
-                               }),
-    @NamedStoredProcedureQuery(name = "VALIDAR_PONTO_SAIDA", 
-    procedureName = "VALIDAR_PONTO_SAIDA",
-    parameters = {
-          @StoredProcedureParameter(mode = ParameterMode.IN, name = "matricula", type = String.class)
-    })
-})
 
 @Entity
 @Table(name = "tbl_ponto")
@@ -39,7 +21,7 @@ public class Relatorio {
 	@Column(name = "relatorio_id")
 	private Long id;
 	
-    @ManyToOne
+	@ManyToOne
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
   

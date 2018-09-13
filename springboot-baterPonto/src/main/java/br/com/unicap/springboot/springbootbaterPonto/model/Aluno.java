@@ -1,15 +1,10 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -34,13 +29,25 @@ public class Aluno {
     @Column(name = "aluno_senha")
     private String senha;
     
-    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "aluno", orphanRemoval = true)
-    private List<Relatorio> relatorios = new ArrayList<>();
+    /*
+    @JsonIgnoreProperties("aluno")
+    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "aluno", orphanRemoval = true,fetch = FetchType.LAZY)
+    private List<Relatorio> relatorios = new ArrayList<>();*/
 
     public Aluno() {
     }
+
     
-    
+    /*
+	public List<Relatorio> getRelatorios() {
+		return relatorios;
+	}
+
+
+
+	public void setRelatorios(List<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}*/
 
 
 
@@ -48,17 +55,9 @@ public class Aluno {
 		return id;
 	}
 
-
-
-
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-
-
 
 	public String getMatricula() {
 		return matricula;
@@ -104,32 +103,9 @@ public class Aluno {
 		this.senha = senha;
 	}
 
-
-
-
-
-	public List<Relatorio> getRelatorios() {
-		return relatorios;
-	}
-
-
-
-
-
-	public void setRelatorios(List<Relatorio> relatorios) {
-		this.relatorios = relatorios;
-	}
-
-
-
-
-
-	
-
 	@Override
 	public String toString() {
-		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + ", relatorios="
-				+ relatorios + "]";
+		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + "]";
 	}
 
 

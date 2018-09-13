@@ -1,14 +1,15 @@
 package br.com.unicap.springboot.springbootbaterPonto.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,6 @@ public class ControllerRelatorio{
 
     @Autowired
     RelatorioRepository daoRelatorio;
-    
     @Autowired
     AlunoRepository daoAluno;
     @Autowired
@@ -38,117 +38,94 @@ public class ControllerRelatorio{
         relatorio.getAluno().getId();
     }*/
     
-    @SuppressWarnings("deprecation")
 	@PostMapping("/entrada/{matricula}")
-    public Relatorio baterPontoEnt(@PathVariable String matricula) {
-    	Relatorio relatorio = new Relatorio();
-    	Date data = new Date(System.currentTimeMillis());
-    	
+    public HttpStatus baterPontoEnt(@PathVariable String matricula) {
     	Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
-    	    	
-    	if(aluno == null) {
-    		
-    		Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
-    		if(professor!=null) {
-    			if(!professor.getRelatorios().isEmpty()) {
-		    		if(professor.getRelatorios().get(professor.getRelatorios().size()).getHoraent().getDay() != data.getDay()) {
-		    			relatorio.setAluno(null);
-		    			relatorio.setHoraent(data);
-		    			relatorio.setHorasai(null);
-		    			relatorio.setProfessor(professor);
-		    			return daoRelatorio.save(relatorio);
-		    		}
-    			}else {
-    				relatorio.setAluno(null);
-	    			relatorio.setHoraent(data);
-	    			relatorio.setHorasai(null);
-	    			relatorio.setProfessor(professor);
-	    			return daoRelatorio.save(relatorio);
-    			}
-    		}else {
-    			return null;
-    		}
+    	    	    	
+    	if(aluno != null) {
+    		if(daoRelatorio.verificarEntradaAlunoDia(matricula) == 0) {
+    			daoRelatorio.baterPontoAlunoEntrada(aluno.getMatricula());
+	    		return HttpStatus.OK;
+	    	}else {
+	    		return HttpStatus.CONFLICT;
+	    		}
     	}else {
-    		if(!aluno.getRelatorios().isEmpty()) {
-		    		if(aluno.getRelatorios().get(aluno.getRelatorios().size()).getHoraent().getDay() != data.getDay() ) {
-		    			relatorio.setAluno(aluno);
-		    			relatorio.setHoraent(data);
-		    			relatorio.setHorasai(null);
-		    			relatorio.setProfessor(null);
-		    			return daoRelatorio.save(relatorio);
-		    		}
-    		}else {
-    			relatorio.setAluno(aluno);
-    			relatorio.setHoraent(data);
-    			relatorio.setHorasai(null);
-    			relatorio.setProfessor(null);
-    			return daoRelatorio.save(relatorio);
+    		Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
+    		if(professor != null) {
+    			if(daoRelatorio.verificarEntradaProfessorDia(matricula)==0) {
+    	    			daoRelatorio.baterPontoProfessorEntrada(professor.getMatricula());
+    	    			return HttpStatus.OK;
+    				}			
     		}
-    	}
-		return relatorio;
+   		}
+    	return HttpStatus.CONFLICT;
     }
+    
+    
     
     @PostMapping("/saida/{matricula}")
-    public Relatorio baterPontoSai(@PathVariable String matricula) {
-    	Relatorio relatorio = new Relatorio();
-    	Date data = new Date(System.currentTimeMillis());
-    	
+    public HttpStatus baterPontoSai(@PathVariable String matricula) {
     	Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
-    	    	
-    	if(aluno == null) {
-    		
-    		Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
-    		if(professor!=null) {
-    			if(!professor.getRelatorios().isEmpty()) {
-		    		if(professor.getRelatorios().get(professor.getRelatorios().size()).getHorasai().getDay() != data.getDay()) {
-		    			relatorio.setAluno(null);
-		    			relatorio.setHoraent(data);
-		    			relatorio.setHorasai(null);
-		    			relatorio.setProfessor(professor);
-		    			return daoRelatorio.save(relatorio);
-		    		}
-    			}else {
-    				relatorio.setAluno(null);
-	    			relatorio.setHoraent(null);
-	    			relatorio.setHorasai(data);
-	    			relatorio.setProfessor(professor);
-	    			return daoRelatorio.save(relatorio);
+    	    	    	
+    	if(aluno != null) {
+    		if(daoRelatorio.verificarSaidaAlunoDia(matricula) == 0) {
+    			if(daoRelatorio.verificarEntradaAlunoDia(matricula) != 0) {
+	    			daoRelatorio.baterPontoAlunoSaida(aluno.getMatricula());
+	    			return HttpStatus.OK;
     			}
-    		}else {
-    			return null;
     		}
     	}else {
-    		if(!aluno.getRelatorios().isEmpty()) {
-		    		if(aluno.getRelatorios().get(aluno.getRelatorios().size()).getHorasai().getDay() != data.getDay() ) {
-		    			relatorio.setAluno(aluno);
-		    			relatorio.setHoraent(null);
-		    			relatorio.setHorasai(data);
-		    			relatorio.setProfessor(null);
-		    			return daoRelatorio.save(relatorio);
-		    		}
-    		}else {
-    			relatorio.setAluno(aluno);
-    			relatorio.setHoraent(data);
-    			relatorio.setHorasai(null);
-    			relatorio.setProfessor(null);
-    			return daoRelatorio.save(relatorio);
+    		Professor professor = daoProfessor.listarProfessorByMatricula(matricula);
+    		if(professor != null) {
+    			if(daoRelatorio.verificarSaidaProfessorDia(matricula)==0) {
+    				if(daoRelatorio.verificarEntradaProfessorDia(matricula) != 0) {
+    	    			daoRelatorio.baterPontoProfessorSaida(professor.getMatricula());
+    	    			return HttpStatus.OK;
+    				}
+    			}			
     		}
-    	}
-		return relatorio;
+   		}
+    	return HttpStatus.CONFLICT;
     }
     
-    @GetMapping("/hoje/{matricula}")
+	@GetMapping("/hoje/{matricula}")
     public ResponseEntity<Relatorio> consultarHoje(@PathVariable String matricula){
-		return null;
+    	List<Relatorio> relatorios;
     	
+    	java.util.Date dataHoje = new Date(System.currentTimeMillis());  
     	
+    	int anoHoje = Integer.parseInt(dataHoje.toString().substring(0, 4));
+		int mesHoje = Integer.parseInt(dataHoje.toString().substring(5,7));
+		int diaHoje = Integer.parseInt(dataHoje.toString().substring(8,10));
+    	
+    	if(matricula.length() == 10)
+    		relatorios = daoRelatorio.listarRelatoriosByMatriculaAluno(matricula);
+    	else
+    		relatorios = daoRelatorio.listarRelatoriosByMatriculaProfessor(matricula);
+    	
+    	for (Relatorio relatorio : relatorios) {
+			String[] split = relatorio.toString().split("horaent=");
+			String dataStr = split[1].substring(0, 10);
+			int ano = Integer.parseInt(dataStr.substring(0, 4));
+			int mes = Integer.parseInt(dataStr.substring(5,7));
+			int dia = Integer.parseInt(dataStr.substring(8,10));
+			
+			if(dia == diaHoje && mes == mesHoje && ano == anoHoje) {
+				return ResponseEntity.ok(relatorio);
+			}
+		}
+		return ResponseEntity.notFound().build();
     }
 
    @GetMapping("/{matricula}")
-    public ArrayList<Relatorio> consultar(@PathVariable String matricula) {
-    	
-    	//Long id = daoRelatorio.ID_BY_MATRICULA(matricula);
-    	return daoRelatorio.listarRelatoriosByMatricula(matricula);
+    public List<Relatorio> consultar(@PathVariable String matricula) {
+	   
+	   if(matricula.length() == 6) {
+		   	return daoRelatorio.listarRelatoriosByMatriculaProfessor(matricula);
+	   }else {
+	    	return daoRelatorio.listarRelatoriosByMatriculaAluno(matricula);
+	   }
+	   
     }
     
     @GetMapping
@@ -156,5 +133,6 @@ public class ControllerRelatorio{
     	return daoRelatorio.listarRelatorios();
 
     }
+   
     
 }

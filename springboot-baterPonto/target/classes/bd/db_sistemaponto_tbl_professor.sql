@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
--- Host: localhost    Database: db_sistemaponto
+-- Host: 127.0.0.1    Database: db_sistemaponto
 -- ------------------------------------------------------
 -- Server version	8.0.12
 
@@ -29,7 +29,7 @@ CREATE TABLE `tbl_professor` (
   `prof_nome` varchar(70) DEFAULT NULL,
   PRIMARY KEY (`prof_id`),
   UNIQUE KEY `prof_matr` (`prof_matr`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,6 @@ CREATE TABLE `tbl_professor` (
 
 LOCK TABLES `tbl_professor` WRITE;
 /*!40000 ALTER TABLE `tbl_professor` DISABLE KEYS */;
-INSERT INTO `tbl_professor` VALUES (2,'101010','123456','Fernando Wanderley');
 /*!40000 ALTER TABLE `tbl_professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-12 17:30:04
+-- Dump completed on 2018-09-13 14:01:35

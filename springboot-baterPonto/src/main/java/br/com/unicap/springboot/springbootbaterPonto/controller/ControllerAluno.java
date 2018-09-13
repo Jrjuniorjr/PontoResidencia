@@ -51,17 +51,21 @@ public class ControllerAluno {
     @PostMapping
     public ResponseEntity<Aluno> login (@RequestBody Aluno alunoLogin) {
     	
-    	Aluno aluno = daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula());
+    	ResponseEntity<Aluno> entity = null;
     	
-    	if(aluno!=null) {
+    	System.out.println(alunoLogin);
+    	
+    	if(daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula())!=null) {
+    		Aluno aluno = daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula());
+    		System.out.println(aluno);
     		if(aluno.getSenha() == alunoLogin.getSenha()) {
-    			return ResponseEntity.ok(aluno);
+    			entity = ResponseEntity.ok(aluno);
     		}    
     	}else{
-    		return ResponseEntity.notFound().build();
+    		entity = ResponseEntity.notFound().build();
     	}
     	
-    	return ResponseEntity.ok(aluno);
+    	return entity;
     	
     }
 
@@ -78,7 +82,7 @@ public class ControllerAluno {
     
     @GetMapping
     public List<Aluno> listar(){
-    	return daoAluno.findAll();
+    	return daoAluno.listarAlunos();
     }    
 
     @PutMapping("/{matricula}")
