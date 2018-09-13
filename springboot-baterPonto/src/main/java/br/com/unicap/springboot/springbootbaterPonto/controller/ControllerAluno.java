@@ -29,21 +29,40 @@ public class ControllerAluno {
     @Autowired
     AlunoRepository daoAluno;
 
-    @PostMapping
+    @PostMapping("/cadastrar/")
     public ResponseEntity<Aluno> inserir(@RequestBody Aluno aluno) {
         Aluno alunoSalvo = daoAluno.save(aluno);
         return ResponseEntity.status(HttpStatus.CREATED).body(alunoSalvo);
         
     }
 
-    @DeleteMapping("/{matricula}")
+    @DeleteMapping("/deletar/{matricula}")
     public ResponseEntity<Aluno> remover(@PathVariable String matricula){
         Aluno aluno = daoAluno.listarAlunoByMatricula(matricula);
+        System.out.println("Aluno"+aluno);
         if(aluno != null) {
         	daoAluno.delete(aluno);
-        	return ResponseEntity.noContent().build();
+        	return ResponseEntity.ok(aluno);
+        }else {
+        return ResponseEntity.notFound().build();      
         }
-        return ResponseEntity.notFound().build();       
+    }
+    
+    @PostMapping
+    public ResponseEntity<Aluno> login (@RequestBody Aluno alunoLogin) {
+    	
+    	Aluno aluno = daoAluno.listarAlunoByMatricula(alunoLogin.getMatricula());
+    	
+    	if(aluno!=null) {
+    		if(aluno.getSenha() == alunoLogin.getSenha()) {
+    			return ResponseEntity.ok(aluno);
+    		}    
+    	}else{
+    		return ResponseEntity.notFound().build();
+    	}
+    	
+    	return ResponseEntity.ok(aluno);
+    	
     }
 
     @GetMapping("/{matricula}")
@@ -60,7 +79,7 @@ public class ControllerAluno {
     @GetMapping
     public List<Aluno> listar(){
     	return daoAluno.findAll();
-    }
+    }    
 
     @PutMapping("/{matricula}")
     public ResponseEntity<Aluno> alterarSenha(@PathVariable String matricula, @RequestBody String senha) {
@@ -74,5 +93,7 @@ public class ControllerAluno {
     		Aluno alunoAlterado = daoAluno.save(aluno);
     		return ResponseEntity.status(HttpStatus.OK).body(alunoAlterado);
     	}
-    } 
+    }
+    
+    
 }

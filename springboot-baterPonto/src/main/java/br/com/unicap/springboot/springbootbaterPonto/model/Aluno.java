@@ -1,14 +1,16 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 
 
@@ -24,66 +26,113 @@ public class Aluno {
     @Column(name = "aluno_matr")
     private String matricula;
 
-    @NotBlank
+    
     @Column(name = "aluno_nome")
     private String nome;
 
-    @NotBlank
+    
     @Column(name = "aluno_senha")
     private String senha;
     
-    @ManyToOne
-    @JoinColumn(name = "prof_id")
-    private Professor professor;
+    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "aluno", orphanRemoval = true)
+    private List<Relatorio> relatorios = new ArrayList<>();
 
     public Aluno() {
     }
     
-    public Professor getProfessor() {
-		return professor;
-	}
+    
 
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
+
 
 	public Long getId() {
-    	return id;
-    }
+		return id;
+	}
+
+
+
+
 
 	public void setId(Long id) {
-    	this.id = id;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-    
-    @Override
-	public String toString() {
-		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + ", professor="
-				+ professor + "]";
+		this.id = id;
 	}
+
+
+
+
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+
+
+
+
+	public void setMatricula(String matricula) {
+		this.matricula = matricula;
+	}
+
+
+
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+
+
+
+	public String getSenha() {
+		return senha;
+	}
+
+
+
+
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+
+
+
+
+	public List<Relatorio> getRelatorios() {
+		return relatorios;
+	}
+
+
+
+
+
+	public void setRelatorios(List<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
+
+
+
+
+
+	
+
+	@Override
+	public String toString() {
+		return "Aluno [id=" + id + ", matricula=" + matricula + ", nome=" + nome + ", senha=" + senha + ", relatorios="
+				+ relatorios + "]";
+	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -92,7 +141,7 @@ public class Aluno {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

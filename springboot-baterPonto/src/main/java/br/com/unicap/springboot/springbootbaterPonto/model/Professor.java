@@ -1,10 +1,15 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -14,26 +19,37 @@ public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@OneToMany (mappedBy = "prof_id")
     @Column(name = "prof_id")
     private Long id;
     
     @Column(name = "prof_matr")
     private String matricula;
 
-    @NotBlank
     @Column(name = "prof_nome")
     private String nome;
 
-    @NotBlank
     @Column(name = "prof_senha")
-    private int senha;
+    private String senha;
     
+    @OneToMany(cascade = CascadeType.ALL,  mappedBy = "professor", orphanRemoval = true)
+    private List<Relatorio> relatorios = new ArrayList<>();
     
     public Professor() {
     }
 
-    public Long getId() {
+    public List<Relatorio> getRelatorios() {
+		return relatorios;
+	}
+
+
+
+	public void setRelatorios(List<Relatorio> relatorios) {
+		this.relatorios = relatorios;
+	}
+
+
+
+	public Long getId() {
     	return id;
     }
     
@@ -49,11 +65,11 @@ public class Professor {
         return nome;
     }
 
-    public int getSenha() {
+    public String getSenha() {
         return senha;
     }
 
-    public void setSenha(int senha) {
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 

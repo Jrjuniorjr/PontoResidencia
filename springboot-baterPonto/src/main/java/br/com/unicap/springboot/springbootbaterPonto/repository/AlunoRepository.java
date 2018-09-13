@@ -12,12 +12,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import br.com.unicap.springboot.springbootbaterPonto.model.Aluno;
 
-public interface AlunoRepository extends JpaRepository<Aluno, Long>{
+public interface AlunoRepository extends JpaRepository<Aluno, Long> {
 	
 	@Query(value = "SELECT * FROM tbl_alunos WHERE aluno_matr = ?1",nativeQuery = true)
     Aluno listarAlunoByMatricula(String matricula);
 	
 	@Query(value = "SELECT * FROM tbl_alunos",nativeQuery = true)
-	ArrayList<Aluno> listarAlunos();
+	ArrayList<Aluno> listarAlunos();	
 	
 }

@@ -15,7 +15,7 @@ import br.com.unicap.springboot.springbootbaterPonto.model.Professor;
 public interface ProfessorRepository extends JpaRepository<Professor, Long>{
 	
 	@Query(value = "SELECT * FROM tbl_professor WHERE prof_matr = ?1",nativeQuery = true)
-	ArrayList<Professor> listarProfessorByMatricula(String matricula);
+	Professor listarProfessorByMatricula(String matricula);
 	
 	@Query(value = "SELECT * FROM tbl_professor",nativeQuery = true)
 	ArrayList<Professor> listarProfessor();
