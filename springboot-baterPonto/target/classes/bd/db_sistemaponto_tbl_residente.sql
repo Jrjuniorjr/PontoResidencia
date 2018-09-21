@@ -16,29 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tbl_alunos`
+-- Table structure for table `tbl_residente`
 --
 
-DROP TABLE IF EXISTS `tbl_alunos`;
+DROP TABLE IF EXISTS `tbl_residente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_alunos` (
-  `aluno_matr` char(10) DEFAULT NULL,
-  `aluno_id` int(11) NOT NULL AUTO_INCREMENT,
-  `aluno_nome` varchar(70) DEFAULT NULL,
-  `aluno_senha` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`aluno_id`),
-  UNIQUE KEY `aluno_matr` (`aluno_matr`)
+CREATE TABLE `tbl_residente` (
+  `matricula` varchar(10) NOT NULL,
+  `nome` varchar(45) DEFAULT NULL,
+  `token` varchar(300) DEFAULT NULL,
+  `senha` varchar(45) DEFAULT NULL,
+  `tipo` varchar(1) DEFAULT NULL,
+  PRIMARY KEY (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_alunos`
+-- Dumping data for table `tbl_residente`
 --
 
-LOCK TABLES `tbl_alunos` WRITE;
-/*!40000 ALTER TABLE `tbl_alunos` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_alunos` ENABLE KEYS */;
+LOCK TABLES `tbl_residente` WRITE;
+/*!40000 ALTER TABLE `tbl_residente` DISABLE KEYS */;
+INSERT INTO `tbl_residente` VALUES ('101010','Fernando Wanderley','9fij439irjw4oesr8fuzrfnf8yeg7fm','123456','1');
+/*!40000 ALTER TABLE `tbl_residente` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-13 14:01:35
+-- Dump completed on 2018-09-21  0:27:37

@@ -1,106 +1,72 @@
 package br.com.unicap.springboot.springbootbaterPonto.model;
 
-import java.util.Date;
+
+
+import java.time.LocalTime;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name = "tbl_ponto")
-public class Relatorio {
+@Table(name = "tbl_relatorio")
+public class Relatorio{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "relatorio_id")
-	private Long id;
+	@EmbeddedId
+    private RelatorioKey id;
 	
-	@ManyToOne
-    @JoinColumn(name = "aluno_id")
-    private Aluno aluno;
-  
-    @ManyToOne
-    @JoinColumn(name = "prof_id")
-    private Professor professor;
-    
-    @Column(name = "hora_ent")
-    private Date horaent;
+	@Column(name = "data", insertable=false, updatable=false)
+	private LocalTime data;
+	
+	@Column(name = "entrada")
+	private LocalTime entrada;
+	
+	@Column(name = "saida")
+	private LocalTime saida;
+	
+	public Relatorio() {}
 
-    @Column(name = "hora_sai")
-    private Date horasai;
-    
-    public Relatorio() {
-  
-    }
-
-	public Long getId() {
+	public RelatorioKey getId() {
 		return id;
 	}
 
-
-	public void setId(Long id) {
+	public void setId(RelatorioKey id) {
 		this.id = id;
 	}
 
-
-	public Aluno getAluno() {
-		return aluno;
+	public LocalTime getData() {
+		return data;
 	}
 
-
-	public void setAluno(Aluno aluno) {
-		this.aluno = aluno;
+	public void setData(LocalTime data) {
+		this.data = data;
 	}
 
-
-	public Professor getProfessor() {
-		return professor;
+	public LocalTime getEntrada() {
+		return entrada;
 	}
 
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setEntrada(LocalTime entrada) {
+		this.entrada = entrada;
 	}
 
-
-	public Date getHoraent() {
-		return horaent;
+	public LocalTime getSaida() {
+		return saida;
 	}
 
-
-	public void setHoraent(Date horaent) {
-		this.horaent = horaent;
+	public void setSaida(LocalTime saida) {
+		this.saida = saida;
 	}
-
-
-	public Date getHorasai() {
-		return horasai;
-	}
-
-
-	public void setHorasai(Date horasai) {
-		this.horasai = horasai;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Relatorio [aluno=" + aluno + ", professor=" + professor + ", horaent=" + horaent + ", horasai="
-				+ horasai + "]";
-	}
-
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((entrada == null) ? 0 : entrada.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((saida == null) ? 0 : saida.hashCode());
 		return result;
 	}
 
@@ -113,14 +79,36 @@ public class Relatorio {
 		if (getClass() != obj.getClass())
 			return false;
 		Relatorio other = (Relatorio) obj;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (entrada == null) {
+			if (other.entrada != null)
+				return false;
+		} else if (!entrada.equals(other.entrada))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (saida == null) {
+			if (other.saida != null)
+				return false;
+		} else if (!saida.equals(other.saida))
+			return false;
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Relatorio [id=" + id + ", data=" + data + ", entrada=" + entrada + ", saida=" + saida + "]";
+	}
 	
-    
+	
+
 }
+
+

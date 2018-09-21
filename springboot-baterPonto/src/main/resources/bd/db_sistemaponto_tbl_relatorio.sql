@@ -16,33 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tbl_ponto`
+-- Table structure for table `tbl_relatorio`
 --
 
-DROP TABLE IF EXISTS `tbl_ponto`;
+DROP TABLE IF EXISTS `tbl_relatorio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_ponto` (
-  `aluno_id` int(11) DEFAULT NULL,
-  `prof_id` int(11) DEFAULT NULL,
-  `hora_ent` datetime DEFAULT NULL,
-  `hora_sai` datetime DEFAULT NULL,
-  `relatorio_id` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`relatorio_id`),
-  KEY `aluno_id` (`aluno_id`),
-  KEY `prof_id` (`prof_id`),
-  CONSTRAINT `tbl_ponto_ibfk_1` FOREIGN KEY (`aluno_id`) REFERENCES `tbl_alunos` (`aluno_id`),
-  CONSTRAINT `tbl_ponto_ibfk_2` FOREIGN KEY (`prof_id`) REFERENCES `tbl_professor` (`prof_id`)
+CREATE TABLE `tbl_relatorio` (
+  `matricula` varchar(10) NOT NULL,
+  `data` datetime NOT NULL,
+  `entrada` datetime DEFAULT NULL,
+  `saida` datetime DEFAULT NULL,
+  PRIMARY KEY (`matricula`,`data`),
+  CONSTRAINT `fk_matricula` FOREIGN KEY (`matricula`) REFERENCES `tbl_residente` (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_ponto`
+-- Dumping data for table `tbl_relatorio`
 --
 
-LOCK TABLES `tbl_ponto` WRITE;
-/*!40000 ALTER TABLE `tbl_ponto` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_ponto` ENABLE KEYS */;
+LOCK TABLES `tbl_relatorio` WRITE;
+/*!40000 ALTER TABLE `tbl_relatorio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_relatorio` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-13 14:01:35
+-- Dump completed on 2018-09-21  0:27:37
