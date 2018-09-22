@@ -1,10 +1,12 @@
+import { AuthService } from './auth.service.';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of, empty } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Aluno } from '../model/aluno'
-import { EndpointService } from '../services/endpoint.service';
+import { EndpointService } from './endpoint.service';
+import { User } from '../model/user';
 
 /**
  * AdminService.ts
@@ -18,7 +20,8 @@ export class AdminService {
 
   constructor(
     private http:HttpClient, 
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private authService: AuthService
   ) { }
 
   listarAlunos(): Observable<Aluno[]> {
@@ -28,50 +31,53 @@ export class AdminService {
       'Cache-Control': 'no-cache'
     });
 
+    console.log(this.endpointService.listarAluno)
     return this.http.get<HttpResponse<Object>>(this.endpointService.listarAluno, {headers:httpHeaders, observe:"response"})
       .pipe(
-        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]),
+        map( (data:HttpResponse<Object>) =>  data.body as Aluno[]), // TODO: fazer regras de timeout aqui (HttpInterceptor)
         catchError(this.handleError<Aluno[]>("listar alunos", [])) 
       )
   }
 
   removerAluno(matricula:string){
-    const endPoint = this.endpointService.removerAluno + matricula
+    const endPoint = this.endpointService.removerAluno + "/" + matricula
 
     let httpHeaders = new HttpHeaders({
       'Content-Type' : 'application/json',  
       'Cache-Control': 'no-cache'
     });
 
-    // TODO: PREGUIÇA DE CRIAR O MOCK PRA ISSO
-    // TODO: Confirmar o que realmente o server tá retornando para indicar que a remoção foi feita !
-    // return this.http.get<HttpResponse<Object>>(endPoint, {headers:httpHeaders, observe:"response"})
-    //   .pipe(
-    //     map( (data:HttpResponse<Object>) =>  data.ok? true : false), 
-    //     catchError(this.handleError<boolean>("removerAluno", false)) 
-    //   )
-    return of(true)
+    return this.http.delete<HttpResponse<Object>>(endPoint, {headers:httpHeaders, observe:"response"})
+      .pipe(
+        map( (data:HttpResponse<Object>) =>  data.ok? true : false), 
+        catchError(this.handleError<boolean>("removerAluno", false)) 
+      )
   }
 
-  inserirAluno(matriculaProfessor:string, aluno:Aluno) {
-    const endPoint = this.endpointService.inserirAluno + matriculaProfessor
+  inserirAluno(user:User) {
+    const endPoint = this.endpointService.inserirAluno
 
     // Headers para enviar no POST
       let httpHeaders = new HttpHeaders({
         'Content-Type' : 'application/json',  // Padrão para JSON
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Authorization' : this.authService.authUser.token
       });
-  
-      return this.http.post<HttpResponse<Object>>(endPoint, aluno, {headers:httpHeaders, observe:"response"})
+
+      // let postAluno:any = {...aluno}
+      // postAluno.professor = {id: 1}
+
+      
+      return this.http.post<HttpResponse<Object>>("http://localhost:8080/residente/", user, {headers:httpHeaders, observe:"response"})
         .pipe(
-          tap(data => console.log(data)),
-          map( (data:HttpResponse<Object>) =>  data.ok),
+          tap(data => console.log("Data:"+data.body)),
+          // map( (data:HttpResponse<Object>) =>  data.ok),
           catchError(this.handleError<boolean>("inserir aluno", false)) 
         )
   }
 
   updateAluno(matriculaProfessor:string, aluno:Aluno) {
-    const endPoint = this.endpointService.updateAluno + matriculaProfessor
+    const endPoint = this.endpointService.updateAluno + "/" + aluno.matricula
 
     // Headers para enviar no POST
       let httpHeaders = new HttpHeaders({
@@ -79,7 +85,10 @@ export class AdminService {
         'Cache-Control': 'no-cache'
       });
   
-      return this.http.put<HttpResponse<Object>>(endPoint, aluno, {headers:httpHeaders, observe:"response"})
+      let postAluno:any = {...aluno}
+      postAluno.professor = {id: 1}
+
+      return this.http.put<HttpResponse<Object>>(endPoint, aluno.senha, {headers:httpHeaders, observe:"response"})
         .pipe(
           tap(data => console.log(data)),
           map( (data:HttpResponse<Object>) =>  data.ok),

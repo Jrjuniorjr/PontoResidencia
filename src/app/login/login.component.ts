@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password:['', Validators.required]
     })
 
-    this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
+    //this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
   }
 
   ngOnDestroy() { }
@@ -40,12 +40,12 @@ export class LoginComponent implements OnInit, OnDestroy {
    * {matricula: string, nome:string }
    */
   private login(): void {
+    // this.authService.login(this.userLogin.toString(), this.userPassword)
     this.authService.login(this.userLogin.toString(), this.userPassword)
       .subscribe( (data:User) => {
         //   this.router.navigate(['/aluno'], { skipLocationChange:true, queryParams: {matricula: data.matricula, nome:data.nome} })
         // else if(data.matricula.length === matriculaAdminSize)
         //   this.router.navigate(['/admin'], { skipLocationChange:true, queryParams: {matricula: data.matricula, nome:data.nome} })
-
         this.router.navigate([ this.authService.redirectUrl])
         this.userPassword = ""
     })

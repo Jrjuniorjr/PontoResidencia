@@ -1,53 +1,78 @@
+import { AuthService } from './auth.service.';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { User } from '../model/user';
 import { EndpointService } from './endpoint.service';
+import { Relatorio } from '../Relatorio';
+import { Relatorio } from '../model/relatorio';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
+
 
 @Injectable({ providedIn: 'root' })
 export class AlunoService { 
 
   constructor(
     private http:HttpClient,
-    private endpointService:EndpointService
+    private endpointService:EndpointService,
+    private authService:AuthService
   ) { }
 
-    baterPonto(matricula:string) {
+    baterPontoEntrada(matricula:string, opcao:string) {
       let httpHeaders = new HttpHeaders({
         'Content-Type' : 'application/json',
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Authorization' : this.authService.authUser.token
       });
-
-      const endpoint = this.endpointService.ponto + "/" + matricula
+      
+      let endpoint:string
+      if(opcao === "/entrada")
+        endpoint = this.endpointService.baterPontoEntrada 
+      else
+        endpoint = this.endpointService.baterPontoSaida
   
+
+      console.log(endpoint)
       // Quero receber a resposta do servidor (Http Response) crua (completa) em vez do angular tentar converter a resposta em um Objeto, logo eu digo que o .post irá receber um HttpResponse<Object> (Angular)
       // Pra fazer com que o Angular me retorne o Http Response precisa passar o parâmetro { "observe" : "response" } no Options do .post
-      // return this.http.post<HttpResponse<Object>>(endpoint, null, {headers:httpHeaders, observe:"response"}).pipe(
-      //   tap( (data:HttpResponse<Object>) => { 
-      //     if(data && data.ok)
-      //       this.setPonto(matricula)
-      //   }),
-      //   catchError(this.handleError("bater-ponto", {})
-      // ))
+      return this.http.post<HttpResponse<Object>>(endpoint, {},{headers:httpHeaders, observe:"response"}).pipe(
+        map((data:any) => data.body as Relatorio),
+        catchError(this.handleError("bater-ponto", {})
+      ))
 
-      this.setPonto(matricula)
+      //this.setPonto(matricula)
     }
 
-    public getPonto(item:string) {
+    public getPonto(item:string)  {
       return localStorage.getItem(item)
     }
 
+    public getPontoHoje() : Observable<Relatorio> {
+      let httpHeaders = new HttpHeaders({
+        'Content-Type' : 'application/json',
+        'Cache-Control': 'no-cache',
+        'Authorization' : this.authService.authUser.token
+      })
+
+      return this.http.get<HttpResponse<Object>>("http://localhost:8080/relatorio/hoje", {headers:httpHeaders, observe:"response"}).pipe(
+        map((data:any) => data.body as Relatorio),
+        catchError(this.handleError("getPontoHoje", {})
+      ))
+    }
+
     private setPonto(matricula:string) {
-      let item = this.getPonto(matricula+"-entrada")? matricula+"-saida" : matricula+"-entrada"
+      // let item = this.getPonto(matricula+"-entrada")? matricula+"-saida" : matricula+"-entrada"
+      let item = matricula.replace('/', '-')
 
       if(!localStorage.getItem(item))
-        localStorage.setItem(item, new Date().toString())
+        localStorage.setItem(item, new Date().toLocaleString())
     }
+
+    public clearStorage(mat:string) { localStorage.clear(); localStorage.removeItem(mat) }
 
     
 

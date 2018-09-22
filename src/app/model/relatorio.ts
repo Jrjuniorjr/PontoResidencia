@@ -12,9 +12,9 @@ export class Relatorio {
 
     constructor(
         public matricula:string,
-        public nome:string,
-        public entrada:number,
-        public saida:number
+        public data:string,
+        public entrada:string,
+        public saida:string
     ){}
 
 }

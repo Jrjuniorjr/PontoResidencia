@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {Relatorio} from '../model/relatorio';
@@ -52,13 +53,23 @@ export class RelatorioComponent implements OnInit {
   // alunos : Aluno[] = [
   //   {nome:'Glauber',login:'hasuash',matricula:'1241241',id:1,password:'x'},
   // ]
+  matricula:string
   constructor(
     private router:Router,
+    private route:ActivatedRoute,
     private relatorioService:RelatorioService
   ) {}
 
   ngOnInit() {
-    this.relatorioService.fetchRelatorio().subscribe( (data:Relatorio[]) => this.relatorios = data)
+    this.route.queryParamMap.subscribe(params => {
+      // let matricula = params['matricula']?
+      let gambiarra = params.get('matricula') || ""
+      console.log(params)
+
+      this.relatorioService.fetchRelatorio(gambiarra).subscribe( (data:Relatorio[]) => {console.log(data); this.relatorios = data})
+
+    })
+    // this.relatorioService.fetchRelatorio().subscribe( (data:Relatorio[]) => this.relatorios = data)
   }
 
   // meses:string [] = [

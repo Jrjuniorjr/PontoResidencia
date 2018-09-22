@@ -8,6 +8,6 @@ export class AlunoGuard implements CanActivate {
   constructor(private authService:AuthService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return !this.authService.authUser.isAdmin // CLEVER ONE, BOY
+    return this.authService.authUser.adm === '0'// CLEVER ONE, BOY
   }
 }
