@@ -20,7 +20,7 @@ export class EndpointService {
   private API_BATER_PONTO_SAIDA = "/saida"
   private API_ALUNO = "/aluno"
   private API_RELATORIO = '/relatorio'
-  private API_LOGIN = '/'
+  private API_LOGIN = '/residente/login'
 
 
   // SERVIÇOS

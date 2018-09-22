@@ -48,8 +48,8 @@ export class LoginService {
     // Obs.: catchError( Function:errorHandler(error) )
     return this.http.post<HttpResponse<Object>>(this.endpointService.login, data, {headers:httpHeaders, observe:"response"})
       .pipe(
-        map( (data:HttpResponse<Object>) =>  data.body as User), // TODO: fazer regras de timeout aqui (HttpInterceptor)
-        catchError(this.handleError<User>("login", new User("","",null))) // String vazia é melhor do que Null, menos chance de dar merda obg
+        map( (data:HttpResponse<Object>) =>  data.body as User, console.log(data)), // TODO: fazer regras de timeout aqui (HttpInterceptor)
+        catchError(this.handleError<User>("login", new User("","","",null,""))) // String vazia é melhor do que Null, menos chance de dar merda obg
       )
   }
 

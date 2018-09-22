@@ -31,7 +31,13 @@
     </div>
 
 <!-- TELA: CADASTRO NOVO ALUNO -->
-<div id="cadastro" *ngIf="isCadastroOn">
+<div class="n_container" id="cadastro" *ngIf="isCadastroOn">
+    <div class="form-container">
+    <div class="row">
+        <div class="form-title">
+            <span>Novos Dados</span>
+        </div>
+    
     <br>
     <form (ngSubmit)="inserir()" [formGroup]="novoAlunoForm">
 
@@ -58,24 +64,27 @@
         </div>
          -->
          <!-- MATRICULA -->
-        <div style="display:flex;">
-            <input type="number"
-                placeholder="Matrícula" 
-                formControlName="matricula"
-                required 
-            >
-      
+         <div class="req_input">
+            <div class="input-container">
+                    <div style="display:flex;">    
+                <label>Matrícula</label>
+                <input type="number"
+                    formControlName="matricula"
+                    required 
+                >
+
           <!-- <div *ngIf="matricula.invalid && (matricula.dirty || matricula.touched)"> Login required ! </div> -->
             <div 
                 *ngIf="novoAlunoForm.controls['matricula'].invalid && (novoAlunoForm.controls['matricula'].dirty ||novoAlunoForm.controls['matricula'].touched)"> 
                     Matricula required ! 
           </div>
-        </div>
+            </div>
+        
         
          <!--NOME -->
         <div style="display:flex;">
+            <label>Nome</label>
             <input type="text"
-                placeholder="Nome" 
                 formControlName="nome"
                 required
             >
@@ -89,8 +98,8 @@
 
         <!-- SENHA -->
         <div style="display:flex;">
+                <label>Senha</label>
             <input type="password"
-                placeholder="Senha do Aluno" 
                 formControlName="password"
                 required
             >
@@ -98,15 +107,21 @@
           <!-- <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"> Password required ! </div> -->
           <div 
             *ngIf="novoAlunoForm.controls['password'].invalid && (novoAlunoForm.controls['password'].dirty ||novoAlunoForm.controls['password'].touched)"> 
-                Passoword required ! 
+                Password required ! 
           </div>
         </div>
         
-      
+    
         <!-- <button (click)="matricula(); loginForm.reset()">Button</button> -->
         <!-- <button type="submit" [disabled]="!loginForm.form.valid">Submit</button> -->
-        <button type="submit" [disabled]="!novoAlunoForm.valid">Cadastrar</button>
+       
+            <div class="n_buttons">
+                <button id="n_cadastro" class="control_buttons"  type="submit" [disabled]="!novoAlunoForm.valid">Cadastrar</button>
+            </div>
+        </div>
+    </div>
     </form>
+    </div>
 </div>
 
 

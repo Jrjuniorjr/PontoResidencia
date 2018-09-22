@@ -51,7 +51,7 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
     })
 
     // Primeiro listar ao entrar na página de Admin
-    this.updateAlunoList()
+    // this.updateAlunoList()
   }
 
   AbrirTelaRelatorio(aluno:Aluno) {
@@ -87,21 +87,23 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
 
   // inserir(nome:string, matricula:string, senha:string) : void {
   inserir() {
-    let aluno = new Aluno(
+    let user = new User(
       this.novoAlunoForm.get('matricula').value,
       this.novoAlunoForm.get('nome').value,
+      "",
+      '0',
       this.novoAlunoForm.get('password').value
     )
 
     if(this.inserirMode === 'cadastro') {
       // Lul, acabei de descobrir que é o .subscribe() que consome o Observable, se não usar nada do observable é utilizado jjjjjjj cu
-      this.adminService.inserirAluno(aluno)
+      this.adminService.inserirAluno(user)
         .subscribe(data => { 
-          this.updateAlunoList()
+          // this.updateAlunoList()
           // this.alunos.push(aluno) // TODO: remover esta bosta
         })
     } else {
-      this.adminService.updateAluno(this.user.matricula, aluno)
+      this.adminService.updateAluno(this.user.matricula, user)
         .subscribe(data => { 
           this.updateAlunoList()
           // this.alunos.push(aluno) // TODO: remover esta bosta
@@ -113,7 +115,7 @@ export class AdminDashboardComponent implements OnInit { // TODO: mudar o nome d
   }
 
   private updateAlunoList() {
-    this.adminService.listarAlunos().subscribe(alunos => this.alunos = alunos)
+    this.adminService.listarAlunos().subscribe(users => this.alunos = users)
  }
   /* =========== MOCK USERS ===========  */
   // Será que isso vai aparecer no commit history? 

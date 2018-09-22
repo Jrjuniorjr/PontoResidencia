@@ -5,6 +5,7 @@ import { AlunoService } from '../services/aluno.service';
 import { Location } from '@angular/common';
 import { AuthService } from '../services/auth.service.';
 import { Router } from '@angular/router';
+import { Relatorio } from '../model/relatorio';
 
 @Component({
   selector: 'app-aluno',
@@ -40,14 +41,21 @@ export class AlunoComponent implements OnInit {
 
   }
 
-  updateUserPonto() {
-    this.entrada = this.alunoService.getPonto(this.USER_ENTRADA)
-    this.saida = this.alunoService.getPonto(this.USER_SAIDA)
+  updateUserPonto(r?:Relatorio) {
+    if(r) {
+      this.entrada = r.entrada
+      this.saida = r.saida
+    } else {
+      this.alunoService.getPontoHoje().subscribe( (data:Relatorio)  => {
+        this.entrada = data.entrada
+        this.saida = data.saida
+      })
+    }
   }
 
   baterPonto(opcao:string) {
     // console.log('baterPontoEntrada aluno.component')
-    this.alunoService.baterPontoEntrada(this.user.matricula,opcao).subscribe(data => { console.log(data); this.updateUserPonto(); })
+    this.alunoService.baterPontoEntrada(this.user.matricula,opcao).subscribe(data => { this.updateUserPonto(data); })
   }
 
   

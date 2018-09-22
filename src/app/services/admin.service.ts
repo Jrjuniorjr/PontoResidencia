@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service.';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of, empty } from 'rxjs';
@@ -5,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { Aluno } from '../model/aluno'
 import { EndpointService } from './endpoint.service';
+import { User } from '../model/user';
 
 /**
  * AdminService.ts
@@ -18,7 +20,8 @@ export class AdminService {
 
   constructor(
     private http:HttpClient, 
-    private endpointService: EndpointService
+    private endpointService: EndpointService,
+    private authService: AuthService
   ) { }
 
   listarAlunos(): Observable<Aluno[]> {
@@ -51,22 +54,23 @@ export class AdminService {
       )
   }
 
-  inserirAluno(aluno:Aluno) {
+  inserirAluno(user:User) {
     const endPoint = this.endpointService.inserirAluno
 
     // Headers para enviar no POST
       let httpHeaders = new HttpHeaders({
         'Content-Type' : 'application/json',  // Padrão para JSON
-        'Cache-Control': 'no-cache'
+        'Cache-Control': 'no-cache',
+        'Authorization' : this.authService.authUser.token
       });
 
-      let postAluno:any = {...aluno}
-      postAluno.professor = {id: 1}
+      // let postAluno:any = {...aluno}
+      // postAluno.professor = {id: 1}
+
       
-      console.log(postAluno)
-      return this.http.post<HttpResponse<Object>>(endPoint, postAluno, {headers:httpHeaders, observe:"response"})
+      return this.http.post<HttpResponse<Object>>("http://localhost:8080/residente/", user, {headers:httpHeaders, observe:"response"})
         .pipe(
-          tap(data => console.log(data)),
+          tap(data => console.log("Data:"+data.body)),
           // map( (data:HttpResponse<Object>) =>  data.ok),
           catchError(this.handleError<boolean>("inserir aluno", false)) 
         )

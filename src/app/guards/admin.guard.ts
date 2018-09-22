@@ -9,6 +9,6 @@ export class AdminGuard implements CanActivate {
   constructor(private authService:AuthService) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    return this.authService.authUser.isAdmin
+    return this.authService.authUser.adm === '1'
   }
 }
