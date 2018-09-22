@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password:['', Validators.required]
     })
 
-    // this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
+    this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
   }
 
   ngOnDestroy() { }

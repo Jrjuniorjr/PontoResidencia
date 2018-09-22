@@ -49,12 +49,18 @@ export class AuthService {
     // Quero que o retorno seja um HttpResponse<Object> para poder ter mais flexibilidade nos erros em vez de pedir para que o Angular converta automaticamente o RESPONSE em Objeto User
     // Obs.: catchError( Function:errorHandler(error) )
     // TODO: fazer regras de timeout aqui (HttpInterceptor)
-    return this.http.post<HttpResponse<Object>>(this.endpointService.login, data, {headers:httpHeaders, observe:"response"})
-      .pipe(
-        map( (data:HttpResponse<Object>) => data.body), // Recebi o HTTP RESPONSE, ainda não sei o que tem no RESPONSE.body
-        tap( (data:any) => this._authUser = this.getProfile(data)), // Verifico se o que tem no RESPONSE.body é um USER
-        catchError(this.handleError<User>("Auth login", new User("",""))) // String vazia é melhor do que Null, menos chance de dar merda obg
-      )
+    // return this.http.post<HttpResponse<Object>>(this.endpointService.login, data, {headers:httpHeaders, observe:"response"})
+    //   .pipe(
+    //     map( (data:HttpResponse<Object>) => data.body), // Recebi o HTTP RESPONSE, ainda não sei o que tem no RESPONSE.body
+    //     tap( (data:any) => this._authUser = this.getProfile(data)), // Verifico se o que tem no RESPONSE.body é um USER
+    //     catchError(this.handleError<User>("Auth login", new User("",""))) // String vazia é melhor do que Null, menos chance de dar merda obg
+    //   )
+    return this.http.post<HttpResponse<Object>>("http://localhost:8080/cors/",null, {headers:httpHeaders, observe:"response"})
+    .pipe(
+      map( (data:HttpResponse<Object>) => data.body), // Recebi o HTTP RESPONSE, ainda não sei o que tem no RESPONSE.body
+      tap( (data:any) => console.log("Data:" +data)), // Verifico se o que tem no RESPONSE.body é um USER
+      catchError(this.handleError<User>("Auth login", new User("",""))) // String vazia é melhor do que Null, menos chance de dar merda obg
+    )
   }
 
   private getProfile(user:any): User {
