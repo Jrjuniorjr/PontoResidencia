@@ -152,4 +152,11 @@
 
 </div> <!-- End container -->
 
+<!-- info_msg_type = 'info_error' | 'info_warn' | 'info_suscess' -->
+<div id='info_container' *ngIf='info_msg'>
+  <div [class]='info_msg_type'>
+    {{info_msg}}
+  </div>
+</div>
+
 <router-outlet></router-outlet>

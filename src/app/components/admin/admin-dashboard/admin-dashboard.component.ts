@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AdminService } from '../../../services/admin/admin.service';
 import { AuthService } from '../../../services/auth/auth.service';
-// import { User } from '../../../model/aluno'
 import { User, UserRoles } from '../../../model/user';
 
 
@@ -19,7 +18,6 @@ export class AdminDashboardComponent implements OnInit {
   private user:User
   private alunos:User[] = []
   private isCadastroOn:boolean = false;
-  private inserirMode = "cadastro"
 
   constructor(
     private router:Router, 
@@ -58,7 +56,6 @@ export class AdminDashboardComponent implements OnInit {
     this.router.navigate([""])
   }
 
-  // TODO: Fazer EDIÇÃO DE ALUNO (Update)
   atualizar(user:User) : void {
     this.router.navigate(['/new-residente'], {queryParams: { "user" : JSON.stringify(user) } })
   }
@@ -68,46 +65,11 @@ export class AdminDashboardComponent implements OnInit {
       .subscribe( data => {
         this.updateAlunoList()
       })
-    // alert("Não Implementado !")
   }
-
-  // inserir() {
-  //   let user = new User(
-  //     this.novoAlunoForm.get('matricula').value,
-  //     this.novoAlunoForm.get('nome').value,
-  //     "",
-  //     UserRoles.Residente,
-  //     this.novoAlunoForm.get('password').value
-  //   )
-
-  //   if(this.inserirMode === 'cadastro') {
-  //     // Lul, acabei de descobrir que é o .subscribe() que consome o Observable, se não usar nada do observable é utilizado jjjjjjj cu
-  //     this.adminService.inserirAluno(user)
-  //       .subscribe(data => { 
-  //         // this.updateAlunoList()
-  //         // this.alunos.push(aluno) // TODO: remover esta bosta
-  //       })
-  //   } else {
-  //     this.adminService.updateAluno(this.user.matricula, user)
-  //       .subscribe(data => { 
-  //         this.updateAlunoList()
-  //         // this.alunos.push(aluno) // TODO: remover esta bosta
-  //         this.inserirMode = "cadastro"
-  //       })
-  //   }
-  //   // aluno = new User(this.cont++, matricula ,nome , senha, 'x');
-  //   // this.alunos.push(aluno);
-  // }
 
   private updateAlunoList() {
     this.adminService.listarAlunos().subscribe(users => this.alunos = users)
  }
-
-  // THE MOCKING GOD
-  removerAluno(deleted:string) {
-    // this.adminService.removerAluno(deleted).subscribe(resposta => console.log(resposta))
-    return this.alunos.filter(aluno => aluno.matricula != deleted)
-  }
 
 }
 

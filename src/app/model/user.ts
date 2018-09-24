@@ -19,4 +19,9 @@ export class User {
     public isResidente(): boolean {
         return this.tipo == UserRoles.Residente
     }
+
+    // É considerado vazio ou corrompido quando um dos 3 campos estão vazios
+    public isEmpty() : boolean {
+        return !this.matricula || !this.nome || !this.tipo // somente os campos importantes
+    }
 }

@@ -1,46 +1,26 @@
-<!-- FILTRAGEM -->
-
-<!-- <div>
-  <label>Meses</label>
-    <select [(ngModel)] = "mesSelected" (ngModelChange)="filtroMes($event)" >
-      <option selected>Todos</option>
-      <option *ngFor="let mes of meses" >
-        <span>{{mes}}</span>
-      </option>
-    </select>
-<div>
-  
-<div>
-  <label>Alunos</label>
-    <select [(ngModel)]="alunoSelected" (ngModelChange)="filtroAluno($event)">
-      <option>Todos</option>
-      <option *ngFor="let aluno of alunos" [ngValue]='aluno'>
-        <span>{{aluno.nome}}</span>
-      </option>
-    </select>
-</div> -->
-
-<!-- TABELA RELATÓRIO -->
-<!-- <div id="table_main" *ngIf="relatorios.length"> -->
 <div id="table_main">
     <table class="container">
         <tr>
             <th>Matricula</th>
             <th>Nome</th>
+            <th>Data</th>
             <th>Entrada</th>
             <th>Saída</th>
         </tr>
 
         <tr *ngFor="let relatorio of relatorios">
-            <td>{{relatorio.matricula}}</td>
-            <td [class.aluno_nome]="true">{{relatorio.nome}}</td>
-            <td>{{relatorio.entrada}}</td>
-            <td>{{relatorio.saida}}</td>
+          <!-- <td>{{user?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{user?.nome}}</td> -->
+          <td>{{relatorio?.id?.residente?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{relatorio?.id?.residente?.nome}}</td>
+          <td>{{relatorio?.data || "N/A"}}</td>
+          <td>{{relatorio?.entrada || "N/A"}}</td>
+          <td>{{relatorio?.saida || "N/A"}}</td>
         </tr>
     </table>
 </div>
 
 <!-- PORQUE EU SÓ CONSIGO SETAR O ID DO BOTÃO SE A MERDA DO DIV TAMBÉM TIVER UM ID? Amanhã eu procuro no google -->
 <div id="gambiarra_lul">
-  <button id="btn_voltar" (click)="voltarTelaAdmin()">Voltar</button>
+  <button id="btn_voltar" (click)="goBack()">Voltar</button>
 </div>

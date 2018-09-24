@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { User } from '../../model/user';
@@ -55,11 +55,12 @@ export class AuthService extends BaseService {
   //       catchError(this.handleError<User>("Auth login", new User("","","",null,""))) // String vazia é melhor do que Null, menos chance de dar merda obg
   //     )
   // }
-  login(matricula:string, senha:string): Observable<User> {
+  login(matricula:string, senha:string) : Observable<User> {
     // console.log(this.endpointService.login)
     return this.doPost<User>(this.endpointService.login,{matricula,senha})
       .pipe(
-        map( (data:User) => this.verifyUser(data))
+        map( (data:User) => this.verifyUser(data)),
+        catchError( err => of(this.verifyUser(null))) // necessário para quando o servidor não consegue retornar NADA
       )
   }
 
@@ -67,12 +68,12 @@ export class AuthService extends BaseService {
     this._authUser = null
   }
 
-  private verifyUser(user:any) : User|null {
-    if(!this.isUser(user)) return null
+  private verifyUser(user:any) : User {
+    if(!this.isUser(user)) return new User("", "", "", null)
 
     user = new User(
-      user.nome,
       user.matricula,
+      user.nome,
       user.token,
       user.tipo,
       null
@@ -101,9 +102,9 @@ export class AuthService extends BaseService {
     if(user) {
       if (user.matricula && user.nome && user.tipo && user.token)
         result = true
-      else 
+      else  // algum campo importante faltando
         result = false
-    } else
+    } else // null
       result = false
     
       return result

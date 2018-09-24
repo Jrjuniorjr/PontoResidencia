@@ -16,7 +16,7 @@ export class EndpointService {
   // Se tivesse colocaria aqui também
   
   // SERVICE ENDPOINTS BASE
-  private API_PONTO     = "/ponto" 
+  private API_PONTO     = "/ponto/" 
   private API_RESIDENTE = "/residente/" 
   private API_RELATORIO = "/relatorio/" 
 
@@ -86,6 +86,7 @@ export class EndpointService {
   get relatorioByAluno() { return this._api_relatorio + this._getone }
 
   get relatorioAll() { return this._api_relatorio }
+  get relatorioAllByMatricula() { return this._api_relatorio }
 
   
   /**

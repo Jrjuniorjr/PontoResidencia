@@ -12,6 +12,9 @@ import { User } from '../../model/user';
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  info_msg:string
+  info_msg_type:string
+
   // Representa o Form do Template
   private userLoginForm:FormGroup
   // @ViewChild('inputLogin') inputLoginEl:ElementRef // Referência ao #inputLogin do tipo <input>
@@ -39,8 +42,20 @@ export class LoginComponent implements OnInit, OnDestroy {
   private login(): void {
     this.authService.login(this.userLogin.toString(), this.userPassword)
       .subscribe( (data:User) => {
-        this.router.navigate([ this.authService.redirectUrl])
-        this.userPassword = ""
+        if(data.isEmpty()) {
+          this.info_msg = "Erro ao fazer login"
+          this.info_msg_type = "info_error"
+        } else {
+          this.info_msg = "Login realizado com sucesso"
+          this.info_msg_type = "info_success"
+        }
+
+        setTimeout(() => {
+          this.info_msg = ""
+          this.info_msg_type = ""
+          this.router.navigate([ this.authService.redirectUrl])
+          // this.userPassword = ""
+        }, 1000)
     })
   }
 

@@ -18,7 +18,7 @@ input::-webkit-inner-spin-button {
 #container .login {
     opacity: 1;
     top: 20px;
-    -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85);
+    /* -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85); */
     transition-property: transform, opacity, box-shadow, top, left;
     transition-duration: 0.5s;
     transform-origin: 161px 100%;
@@ -212,37 +212,6 @@ input::-webkit-inner-spin-button {
     color:cornflowerblue !important;
     border: 1px solid cornflowerblue !important;
 }
-
-#info_container {
-    /* width: 100%; */
-    margin-top: 2px;
-    background: transparent;
-    transition-property: background, color;
-    transition-duration: 0.2s;
-    text-align: center;
-    background-color:#1F2739;
-    overflow: hidden;
-    position: relative;
-}
-
-#info_container .info_success {
-    padding: 10px 10px !important;
-    color:green !important;
-    border: 1px solid green;
-}
-
-#info_container .info_warn {
-    padding: 10px 10px !important;
-    color:yellow !important;
-    border: 1px solid yellow !important;
-}
-
-#info_container .info_error {
-    padding: 10px 10px !important;
-    color:red !important;
-    border: 1px solid red !important;
-}
-
 
   /* .brand:hover {
     box-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px purple;

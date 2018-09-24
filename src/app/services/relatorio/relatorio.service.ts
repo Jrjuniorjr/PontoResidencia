@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable, of, empty } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
-import { User } from '../../model/user'
 import { EndpointService } from '../endpoint.service';
 import { Relatorio } from '../../model/relatorio';
+import { BaseService } from '../BaseService';
 
 /**
  * LoginService.ts
@@ -15,37 +15,27 @@ import { Relatorio } from '../../model/relatorio';
  */
 
 @Injectable({ providedIn: 'root' })
-export class RelatorioService {
+export class RelatorioService extends BaseService {
 
   constructor(
-    private http:HttpClient,
+    http:HttpClient,
     private endpointService:EndpointService
-  ) { }
+  ) {
+    super(http)
+   }
   
-  fetchRelatorio(matricula:string): Observable<Relatorio[]> {
-    // Headers para enviar no POST
-    let httpHeaders = new HttpHeaders({
-      'Content-Type' : 'application/json',  // Padrão para JSON
-      'Cache-Control': 'no-cache'
-    });
+  fetchRelatorio(matricula?:string): Observable<Relatorio[]> {
+    let endpoint:string
+    
+    if(matricula)
+      endpoint = this.endpointService.relatorioAllByMatricula + matricula
+    else
+      endpoint = this.endpointService.relatorioAll
 
-    return this.http.get<HttpResponse<Object>>(this.endpointService.relatorioAll, {headers:httpHeaders, observe:"response"})
+    return this.doGet<Relatorio[]>(endpoint)
       .pipe(
-        tap(data => console.log(data)),
-        map( (data:HttpResponse<Object>) => this.processRelatorio(data.body) as Relatorio[]), 
-        catchError(this.handleError<Relatorio[]>("relatorio", [])) 
+        catchError(err => of([]))
       )
-  }
-
-  private processRelatorio(data:any) {
-    return data.map( r => {
-      return new Relatorio(
-        r.aluno.matricula,
-        r.aluno.nome,
-        r.horaent,
-        r.horasai
-      )
-    })
   }
 
   /**
@@ -54,18 +44,18 @@ export class RelatorioService {
    * @param operation: string - Nome da operação que falhou
    * @param result?: T - Caso a operação falhe irá retornar um novo Observable<T> passado através do result
    */
-  private handleError<T> (operation = 'operation', result?: T) {
-    // O catchError irá passar um parâmetro "error" caso caia aqui
-    return (error: any): Observable<T> => {
+  // private handleError<T> (operation = 'operation', result?: T) {
+  //   // O catchError irá passar um parâmetro "error" caso caia aqui
+  //   return (error: any): Observable<T> => {
 
-      // log na interface de erro definida
-      // console.error(error); 
+  //     // log na interface de erro definida
+  //     // console.error(error); 
 
-      // TODO: Implementar uma forma melhor de tratar o erro
-      console.error(`${operation} failed: ${error.message}`);
+  //     // TODO: Implementar uma forma melhor de tratar o erro
+  //     console.error(`${operation} failed: ${error.message}`);
 
-      // Se passado um result<T> então retonará um novo Observable<T>
-      return of(result as T);
-    };
-  }
+  //     // Se passado um result<T> então retonará um novo Observable<T>
+  //     return of(result as T);
+  //   };
+  // }
 }

@@ -1,7 +1,8 @@
-import { Observable, of } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, map, tap } from "rxjs/operators";
 
+// TODO: Usar isso de alguma forma... Aacho que pode mover para o ResponseInterceptor
 enum HttpStatus {
     OK = 200
 }
@@ -10,8 +11,8 @@ interface IHeader {
     [index:string]:string
 }
 
+// Que obra de arte...
 export abstract class BaseService {
-  
 
     constructor(private http:HttpClient) {}
 
@@ -23,7 +24,8 @@ export abstract class BaseService {
         // return this.http.post<T>(url, data, { headers:this.getHeaders(headers), observe:"body" })
         return this.httpPost(url, data, headers)
             .pipe(
-                map( (data:HttpResponse<Object>) => data.body as T)
+                map( (data:HttpResponse<Object>) => data.body as T),
+                catchError(err => throwError(err))
             )
     }
 
