@@ -1,0 +1,249 @@
+/* Retirar o "spin box" do <input type="number"> (Utilizando no login) */
+input[type='number'] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#container p {
+    color: #5B5E6F;
+    font-size: 10px;
+    text-align: left;
+}
+
+#container .login {
+    opacity: 1;
+    top: 20px;
+    -webkit-transition-timing-function: cubic-bezier(0.68, -0.25, 0.265, 0.85);
+    transition-property: transform, opacity, box-shadow, top, left;
+    transition-duration: 0.5s;
+    transform-origin: 161px 100%;
+    transform: rotateX(0deg);
+    position: relative;
+    width: 240px;
+    border-top: 2px solid #D8312A;
+    height: 300px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    padding: 100px 40px 40px 40px;
+    background: #35394a;
+    /* Old browsers */
+    background: -moz-linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%, #35394a), color-stop(100%, #1f222e));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+    /* IE10+ */
+    background: linear-gradient(45deg, #35394a 0%, #1f222e 100%);
+    /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#35394a", endColorstr="#1f222e",GradientType=1 );
+    /* IE6-9 fallback on horizontal gradient */
+}
+
+#container .login .validation {
+    position: absolute;
+    z-index: 1;
+    right: 10px;
+    top: 6px;
+    opacity: 0;
+}
+
+#container .login .disclaimer, #container .login .disclaimer p#dev {
+    font-size: 15px !important;
+    color: white;
+    position: absolute;
+    bottom: 30px;
+    left: 35px;
+    width: 250px;
+}
+
+#container .login_title {
+    color: #afb1be;
+    height: 60px;
+    text-align: left;
+    font-size: 16px;
+}
+
+#container .login_fields {
+    height: 208px;
+    position: absolute;
+    left: 0;
+}
+
+#container .login_fields .icon {
+    position: absolute;
+    z-index: 1;
+    left: 36px;
+    top: 8px;
+    opacity: 0.5;
+}
+
+/* Input Password */
+/* #container .login_fields input[type=password] {*/
+#container .login_fields .input_password {
+    color: #DC6180 !important;
+}
+
+/* Inputs */
+/* #container .login_fields input[type=number], #container .login_fields input[type=password] { */
+/* #container .login_fields .input_login, #container .login_fields .input_password, #container .login_fields .input_admin {
+    color: #afb1be;
+    width: 190px;
+    margin-top: -2px;
+    background: #32364a;
+    left: 0;
+    padding: 10px 65px;
+    border-top: 2px solid #393d52;
+    border-bottom: 2px solid #393d52;
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-family: "Gudea", sans-serif;
+    box-shadow: none;
+} */
+
+#container .login_fields__user, #container .login_fields__password, #container .login_fields__name {
+    position: relative;
+}
+
+#container .login_fields__submit {
+    position: relative;
+    top: 35px;
+    left: 0;
+    width: 80%;
+    right: 0;
+    margin: auto;
+}
+
+#container .login_fields__submit .forgot {
+    float: right;
+    font-size: 10px;
+    margin-top: 11px;
+    text-decoration: underline;
+}
+
+#container .login_fields__submit .forgot a {
+    color: #606479;
+}
+
+#container .login_fields__submit input {
+    border-radius: 50px;
+    background: transparent;
+    padding: 10px 50px;
+    border: 2px solid #DC6180;
+    color: #DC6180;
+    text-transform: uppercase;
+    font-size: 11px;
+    transition-property: background, color;
+    transition-duration: 0.2s;
+}
+
+#container .login_fields__submit input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+#container .login_fields__submit input:hover {
+    color: white;
+    background: #DC6180;
+    cursor: pointer;
+    transition-property: background, color;
+    transition-duration: 0.2s;
+  }
+  
+/* .btn_container {
+    background-color:#1F2739;
+ } */
+
+.btn_container, #control_buttons  {
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    display: table;
+    /* padding: 0 0 8em 0; */
+ }
+
+  #control_buttons button {
+    margin-top: 2px !important;
+    width: 100%;
+    background: transparent;
+    padding: 10px 10px !important;
+    border: 2px solid #DC6180;
+    /* color: #DC6180; */
+    text-transform: uppercase;
+    font-size: 11px;
+    transition-property: background, color;
+    transition-duration: 0.2s;
+    background-color:#1F2739;
+ }
+
+ #control_buttons button:hover {
+    /* background: rgba(00, 50, 00, 1); */
+    background-color: rgba(236, 231, 65, 0.623);
+    /* color: white !important; */
+    /* background: green; */
+    cursor: pointer;
+    transition-property: background, color;
+    transition-duration: 0.2s;
+
+}
+
+ button#btn_voltar {
+   /* background-color:#1F2739; */
+    color:green !important;
+    border: 1px solid green !important;
+ }
+
+ button#btn_cadastrar {
+    /* background-color:#1F2739; */
+    color:cornflowerblue !important;
+    border: 1px solid cornflowerblue !important;
+}
+
+#info_container {
+    /* width: 100%; */
+    margin-top: 2px;
+    background: transparent;
+    transition-property: background, color;
+    transition-duration: 0.2s;
+    text-align: center;
+    background-color:#1F2739;
+    overflow: hidden;
+    position: relative;
+}
+
+#info_container .info_success {
+    padding: 10px 10px !important;
+    color:green !important;
+    border: 1px solid green;
+}
+
+#info_container .info_warn {
+    padding: 10px 10px !important;
+    color:yellow !important;
+    border: 1px solid yellow !important;
+}
+
+#info_container .info_error {
+    padding: 10px 10px !important;
+    color:red !important;
+    border: 1px solid red !important;
+}
+
+
+  /* .brand:hover {
+    box-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px purple;
+  } */

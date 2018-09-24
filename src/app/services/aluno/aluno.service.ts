@@ -1,12 +1,11 @@
-import { AuthService } from './auth.service.';
+import { AuthService } from './../auth/auth.service';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { User } from '../model/user';
-import { EndpointService } from './endpoint.service';
-import { Relatorio } from '../Relatorio';
-import { Relatorio } from '../model/relatorio';
+import { User } from '../../model/user';
+import { EndpointService } from './../endpoint.service';
+import { Relatorio } from '../../model/relatorio';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,7 +21,7 @@ export class AlunoService {
     private authService:AuthService
   ) { }
 
-    baterPontoEntrada(matricula:string, opcao:string) {
+    baterPontoEntrada(matricula:string, opcao:string): Observable<Relatorio> {
       let httpHeaders = new HttpHeaders({
         'Content-Type' : 'application/json',
         'Cache-Control': 'no-cache',
@@ -31,9 +30,9 @@ export class AlunoService {
       
       let endpoint:string
       if(opcao === "/entrada")
-        endpoint = this.endpointService.baterPontoEntrada 
+        endpoint = this.endpointService.pontoSaida
       else
-        endpoint = this.endpointService.baterPontoSaida
+        endpoint = this.endpointService.pontoSaida
   
 
       console.log(endpoint)
@@ -41,7 +40,7 @@ export class AlunoService {
       // Pra fazer com que o Angular me retorne o Http Response precisa passar o parâmetro { "observe" : "response" } no Options do .post
       return this.http.post<HttpResponse<Object>>(endpoint, {},{headers:httpHeaders, observe:"response"}).pipe(
         map((data:any) => data.body as Relatorio),
-        catchError(this.handleError("bater-ponto", {})
+        catchError(this.handleError("bater-ponto", new Relatorio("","","",""))
       ))
 
       //this.setPonto(matricula)
@@ -58,10 +57,11 @@ export class AlunoService {
         'Authorization' : this.authService.authUser.token
       })
 
-      return this.http.get<HttpResponse<Object>>("http://localhost:8080/relatorio/hoje", {headers:httpHeaders, observe:"response"}).pipe(
-        map((data:any) => data.body as Relatorio),
-        catchError(this.handleError("getPontoHoje", {})
-      ))
+      return this.http.get<HttpResponse<Object>>("http://localhost:8080/relatorio/hoje", {headers:httpHeaders, observe:"response"})
+        .pipe(
+          map((data:any) => data.body as Relatorio),
+          catchError(this.handleError<Relatorio>("getPontoHoje", new Relatorio("", "", "", ""))
+        ))
     }
 
     private setPonto(matricula:string) {

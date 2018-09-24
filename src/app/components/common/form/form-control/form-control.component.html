@@ -1,0 +1,25 @@
+<div class="form-control">
+  <!-- <label>{{ label }}</label> -->
+  
+  <div *ngIf="type === 'select'; else inputTemplate">
+    <select [formControl]="control">
+      <option  *ngFor='let option of options' [value]='option.id'>{{option.value}}</option>
+    </select>
+
+  </div>
+
+  <ng-template #inputTemplate>
+    <div *ngIf="_hasFocus; else notFocus">
+      <input placeholder={{label}} type="{{type}}" [formControl]="control" appFocus />
+    </div>
+
+    <ng-template #notFocus>
+      <input placeholder={{label}} type="{{type}}" [formControl]="control" />
+    </ng-template>
+  </ng-template>
+
+  <!-- <div *ngIf="!_hasFocus">
+      <input placeholder={{label}} type="{{type}}" [formControl]="control" />
+  </div> -->
+
+</div>

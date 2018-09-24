@@ -1,11 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { User } from '../model/user';
-import { AlunoService } from '../services/aluno.service';
+import { User } from '../../model/user';
+import { AlunoService } from '../../services/aluno/aluno.service';
 import { Location } from '@angular/common';
-import { AuthService } from '../services/auth.service.';
+import { AuthService } from '../../services/auth/auth.service';
 import { Router } from '@angular/router';
-import { Relatorio } from '../model/relatorio';
+import { Relatorio } from '../../model/relatorio';
 
 @Component({
   selector: 'app-aluno',
@@ -55,7 +55,10 @@ export class AlunoComponent implements OnInit {
 
   baterPonto(opcao:string) {
     // console.log('baterPontoEntrada aluno.component')
-    this.alunoService.baterPontoEntrada(this.user.matricula,opcao).subscribe(data => { this.updateUserPonto(data); })
+    this.alunoService.baterPontoEntrada(this.user.matricula,opcao)
+    .subscribe(data => { 
+      this.updateUserPonto(data); 
+    })
   }
 
   

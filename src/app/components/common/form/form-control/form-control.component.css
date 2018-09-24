@@ -1,0 +1,56 @@
+/* .form-control {
+    height: 208px;
+    position: absolute;
+    left: 0;
+} */
+
+.icon {
+    position: absolute;
+    z-index: 1;
+    left: 36px;
+    top: 8px;
+    opacity: 0.5;
+}
+
+/* Input Password */
+input[type=password] {
+    color: #DC6180 !important;
+}
+
+/* Inputs */
+/* #container .login_fields input[type=number], #container .login_fields input[type=password] { */
+input {
+    color: #afb1be;
+    width: 190px;
+    margin-top: -2px;
+    background: #32364a;
+    left: 0;
+    padding: 10px 65px;
+    border-top: 2px solid #393d52;
+    border-bottom: 2px solid #393d52;
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-family: "Gudea", sans-serif;
+    box-shadow: none;
+}
+
+select, option {
+    color: #afb1be;
+    width: 320px; /* Que, lul */
+    margin-top: -2px;
+    background: #32364a;
+    left: 0;
+    padding: 10px 65px;
+    border-top: 2px solid #393d52;
+    border-bottom: 2px solid #393d52;
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-family: "Gudea", sans-serif;
+    box-shadow: none;
+}
+
+/* .form-control {
+    position: relative;
+} */

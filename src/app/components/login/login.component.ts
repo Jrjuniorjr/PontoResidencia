@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AuthService } from '../services/auth.service.';
 import {Router} from '@angular/router';
 
-import { User } from '../model/user';
+import { AuthService } from '../../services/auth/auth.service';
+import { User } from '../../model/user';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   // Representa o Form do Template
   private userLoginForm:FormGroup
+  // @ViewChild('inputLogin') inputLoginEl:ElementRef // Referência ao #inputLogin do tipo <input>
 
   constructor(
     private authService:AuthService,  // Serviço de Login, responsável pelo POST da autenticação
@@ -29,23 +30,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       password:['', Validators.required]
     })
 
+    // setTimeout(() => this.inputLoginEl.nativeElement.focus(), 100)
     //this.login() // TODO: REMOVER ISSO PQ TÁ AUTO-LOGANDO
   }
 
   ngOnDestroy() { }
 
-  /**
-   * Chama o serviço para fazer autenticação (login)
-   * O serviço retorna um objeto do tipo usuário
-   * {matricula: string, nome:string }
-   */
   private login(): void {
-    // this.authService.login(this.userLogin.toString(), this.userPassword)
     this.authService.login(this.userLogin.toString(), this.userPassword)
       .subscribe( (data:User) => {
-        //   this.router.navigate(['/aluno'], { skipLocationChange:true, queryParams: {matricula: data.matricula, nome:data.nome} })
-        // else if(data.matricula.length === matriculaAdminSize)
-        //   this.router.navigate(['/admin'], { skipLocationChange:true, queryParams: {matricula: data.matricula, nome:data.nome} })
         this.router.navigate([ this.authService.redirectUrl])
         this.userPassword = ""
     })
@@ -56,8 +49,8 @@ export class LoginComponent implements OnInit, OnDestroy {
    * Chamado pelo botão Submit
    */
   onSubmit() {
-    console.log(this.userLogin)
-    console.log(this.userPassword)
+    // console.log(this.userLogin)
+    // console.log(this.userPassword)
 
     if(!this.userLogin || !this.userPassword) return
     

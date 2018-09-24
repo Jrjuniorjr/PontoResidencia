@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup,FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import {Relatorio} from '../model/relatorio';
+import {Relatorio} from '../../model/relatorio';
 import {Router} from '@angular/router'
-import {Aluno} from '../model/aluno'
-import { RelatorioService } from '../services/relatorio.service';
+import {Aluno} from '../../model/aluno'
+import { RelatorioService } from '../../services/relatorio/relatorio.service';
 
 enum Meses {
   Janeiro = 1,

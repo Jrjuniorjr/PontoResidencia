@@ -150,6 +150,7 @@ button#btn_cadastrar:focus {
     transition-property: background, color;
     transition-duration: 0.2s;
   }
+  
   .container button:focus {
     box-shadow: none;
     outline: none;

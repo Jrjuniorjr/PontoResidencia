@@ -1,0 +1,64 @@
+<div id='container'>
+  <div class='login'>
+
+    <div class='login_fields'>
+
+      <div class='login_fields__name'>
+        <app-form-control class='input_name'
+          hasFocus
+          [type]="text"
+          [control]="form.controls['nome']" 
+          [label]="'Nome'">
+        </app-form-control>
+      </div>
+
+    <div class='login_fields__user'>
+      <app-form-control class='input_login'
+        [type] = "'number'" 
+        [control]="form.controls['matricula']" 
+        [label]="'Matrícula'">
+      </app-form-control>
+    </div>
+
+    <div class='login_fields__password'>
+      <app-form-control class='input_password'
+        [type] = "'password'" 
+        [control]="form.controls['senha']" 
+        [label]="'Senha'">
+      </app-form-control>
+    </div>
+
+    <div class='login_fields__admin'>
+      <app-form-control class='input_admin'
+        [type]="'select'"
+        [options]="userRoleOptions"
+        [control]="form.controls['tipo']" 
+        [label]="'Admin'">
+      </app-form-control>
+    </div>
+
+
+    <!-- <div class='login_fields__submit'>
+      <input type='submit' (click)='onSubmit()' value='Cadastrar'>
+  </div> -->
+
+  <br>
+  <div style='width:100%;' class='btn_container'>
+      <div id='control_buttons'>
+        <button id='btn_cadastrar' (click)='onSubmit()'>{{btnMsg}}</button>
+        <button id='btn_voltar' (click)='goBack()'>Voltar</button>
+      </div>
+  </div> <!-- EEND BTN_CONTAINER -->
+    </div> <!-- END LOGIN_FIELDS -->
+  </div> <!-- END LOGIN -->
+    
+</div> <!-- END CONTAINER -->
+
+
+<div id='info_container' *ngIf='info_msg'>
+  <div [class]='info_msg_type'>
+    {{info_msg}}
+  </div>
+</div>
+
+

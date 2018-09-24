@@ -1,9 +1,22 @@
+export enum UserRoles {
+    Residente = '0',
+    Admin = '1'
+}
+
 export class User {
     constructor(
         public matricula:string, 
         public nome:string, 
         public token:string,
-        public adm: '0' | '1', // 0 aluno - 1 admin
+        public tipo: UserRoles.Residente | UserRoles.Admin,
         public senha?:string
     ) {}
+
+    public isAdmin(): boolean {
+        return this.tipo == UserRoles.Admin
+    }
+
+    public isResidente(): boolean {
+        return this.tipo == UserRoles.Residente
+    }
 }

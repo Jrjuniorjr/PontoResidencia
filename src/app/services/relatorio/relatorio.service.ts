@@ -3,9 +3,9 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, of, empty } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import { User } from '../model/user';
-import { EndpointService } from './endpoint.service';
-import { Relatorio } from '../model/Relatorio';
+import { User } from '../../model/user'
+import { EndpointService } from '../endpoint.service';
+import { Relatorio } from '../../model/relatorio';
 
 /**
  * LoginService.ts
@@ -29,7 +29,7 @@ export class RelatorioService {
       'Cache-Control': 'no-cache'
     });
 
-    return this.http.get<HttpResponse<Object>>(this.endpointService.EndpointRelatorio+"/"+matricula, {headers:httpHeaders, observe:"response"})
+    return this.http.get<HttpResponse<Object>>(this.endpointService.relatorioAll, {headers:httpHeaders, observe:"response"})
       .pipe(
         tap(data => console.log(data)),
         map( (data:HttpResponse<Object>) => this.processRelatorio(data.body) as Relatorio[]), 

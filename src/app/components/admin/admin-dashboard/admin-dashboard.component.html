@@ -18,11 +18,14 @@
         </table>
     </div>
 
-    <!--  BOTÕES: CADASTRAR, SAIR, RELATÓRIO -->
     <br>
+
+    <!--  BOTÕES: CADASTRAR, SAIR, RELATÓRIO -->
     <div id="control_buttons">
         <div>
-            <button id="btn_cadastrar" (click)="isCadastroOn = !isCadastroOn; novoAlunoForm.reset()"> Novo Cadastro </button>
+            <!-- <button id="btn_cadastrar" (click)="isCadastroOn = !isCadastroOn; novoAlunoForm.reset();"> Novo Cadastro </button> -->
+            <button id="btn_cadastrar" (click)="onCadastrar()"> Novo Cadastro </button>
+            
             <!-- Testando pra ver se eu realmente preciso de [hidden]. Pitt tava usando por algum motivo, então vou deixar aí -->
             <!-- <button id="btn_relatorio" [hidden]="isCadastroOn" (click)="AbrirTelaRelatorio()"> Relatorio </button><br> -->
             <button id="btn_relatorio" (click)="AbrirTelaRelatorio()"> Relatorio </button><br>
@@ -30,8 +33,10 @@
         </div>
     </div>
 
+    <router-outlet></router-outlet>
+
 <!-- TELA: CADASTRO NOVO ALUNO -->
-<div class="n_container" id="cadastro" *ngIf="isCadastroOn">
+<div class="n_container" id="cadastro" *ngIf="false">
     <div class="form-container">
     <div class="row">
         <div class="form-title">
