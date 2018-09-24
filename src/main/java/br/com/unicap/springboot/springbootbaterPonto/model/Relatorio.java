@@ -2,7 +2,12 @@ package br.com.unicap.springboot.springbootbaterPonto.model;
 
 
 
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+//import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -17,13 +22,13 @@ public class Relatorio{
     private RelatorioKey id;
 	
 	@Column(name = "data", insertable=false, updatable=false)
-	private LocalTime data;
+	private Date data;
 	
 	@Column(name = "entrada")
-	private LocalTime entrada;
+	private String entrada;
 	
 	@Column(name = "saida")
-	private LocalTime saida;
+	private String saida;
 	
 	public Relatorio() {}
 
@@ -35,27 +40,27 @@ public class Relatorio{
 		this.id = id;
 	}
 
-	public LocalTime getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(LocalTime data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 
-	public LocalTime getEntrada() {
+	public String getEntrada() {
 		return entrada;
 	}
 
-	public void setEntrada(LocalTime entrada) {
+	public void setEntrada(String entrada) {
 		this.entrada = entrada;
 	}
 
-	public LocalTime getSaida() {
+	public String getSaida() {
 		return saida;
 	}
 
-	public void setSaida(LocalTime saida) {
+	public void setSaida(String saida) {
 		this.saida = saida;
 	}
 
