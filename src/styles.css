@@ -2,6 +2,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Gudea:400,700);
 
+/* DESSATIVADO */
 .body {
   perspective: 800px;
   height: 100vh;
@@ -36,8 +37,39 @@ body {
   background: -o-linear-gradient(45deg, #4158d0, #c850c0);
   background: -moz-linear-gradient(45deg, #4158d0, #c850c0);
   background: linear-gradient(45deg, #4158d0, #c850c0); 
+  background-attachment:fixed; /* ESSA PORRA FAZ MÁGICA */
 }
 
 body ::-webkit-input-placeholder {
   color: #4E546D;
+}
+
+#info_container {
+  /* width: 100%; */
+  margin-top: 2px;
+  background: transparent;
+  transition-property: background, color;
+  transition-duration: 0.2s;
+  text-align: center;
+  background-color:#1F2739;
+  overflow: hidden;
+  position: relative;
+}
+
+#info_container .info_success {
+  padding: 10px 10px !important;
+  color:green !important;
+  border: 1px solid green;
+}
+
+#info_container .info_warn {
+  padding: 10px 10px !important;
+  color:yellow !important;
+  border: 1px solid yellow !important;
+}
+
+#info_container .info_error {
+  padding: 10px 10px !important;
+  color:red !important;
+  border: 1px solid red !important;
 }

@@ -1,0 +1,47 @@
+<!-- <div>
+  <h2>Nome: {{user?.nome}}</h2>
+  <h2>Matricula: {{user?.matricula}}</h2>
+
+  <h2>Entrada: {{entrada}}</h2>
+  <h2>Saída: {{saida}}</h2>
+</div>
+
+<button (click)="baterPonto('/entrada')">ENTRADA</button>
+<button (click)="baterPonto('/saida')">SAIDA</button>
+<br>
+<button (click)="logout()">SAIR</button> -->
+
+ <div id="table_main">
+  <table class="container">
+      <tr>
+          <th>Matricula</th>
+          <th>Nome</th>
+          <th>Data</th>
+          <th>Entrada</th>
+          <th>Saída</th>
+      </tr>
+
+      <tr id='table_dados'>
+          <!-- <td>{{user?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{user?.nome}}</td> -->
+          <td>{{relatorio?.id?.residente?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{relatorio?.id?.residente?.nome}}</td>
+          <td>{{relatorio?.data || "N/A"}}</td>
+          <td>{{relatorio?.entrada || "N/A"}}</td>
+          <td>{{relatorio?.saida || "N/A"}}</td>
+      </tr>
+  </table>
+</div>
+
+<div id="control_buttons">
+  <div>
+    <button id="btn_entrada" (click)="baterPonto(PONTO_ENTRADA)"> Entrada </button>
+    <button id="btn_saida" (click)="baterPonto(PONTO_SAIDA)"> Saida</button>
+    <button id="btn_voltar"  (click)="logout()"> Voltar</button>
+  </div>
+</div>
+
+<!-- PORQUE EU SÓ CONSIGO SETAR O ID DO BOTÃO SE A MERDA DO DIV TAMBÉM TIVER UM ID? Amanhã eu procuro no google -->
+<!-- <div id="gambiarra_lul">
+<button id="btn_voltar" (click)="voltarTelaAdmin()">Voltar</button>
+</div> -->

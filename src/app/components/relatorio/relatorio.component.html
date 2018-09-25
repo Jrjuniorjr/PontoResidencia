@@ -1,0 +1,26 @@
+<div id="table_main">
+    <table class="container">
+        <tr>
+            <th>Matricula</th>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+        </tr>
+
+        <tr *ngFor="let relatorio of relatorios">
+          <!-- <td>{{user?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{user?.nome}}</td> -->
+          <td>{{relatorio?.id?.residente?.matricula}}</td>
+          <td [class.aluno_nome]="true">{{relatorio?.id?.residente?.nome}}</td>
+          <td>{{relatorio?.data || "N/A"}}</td>
+          <td>{{relatorio?.entrada || "N/A"}}</td>
+          <td>{{relatorio?.saida || "N/A"}}</td>
+        </tr>
+    </table>
+</div>
+
+<!-- PORQUE EU SÓ CONSIGO SETAR O ID DO BOTÃO SE A MERDA DO DIV TAMBÉM TIVER UM ID? Amanhã eu procuro no google -->
+<div id="gambiarra_lul">
+  <button id="btn_voltar" (click)="goBack()">Voltar</button>
+</div>
